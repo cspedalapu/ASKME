@@ -26,3 +26,10 @@ Fine-tuning LLMs on domain-specific Q&A
 Expansion to multimodal inputs
 
 Real-time chatbot deployment for eider adoption
+
+
+
+### Contributors
+Christian Bridge
+
+Chandrasekhar Pedalapu
