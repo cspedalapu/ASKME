@@ -1,0 +1,33 @@
+# Core Dependencies
+sentence-transformers==2.2.2
+faiss-cpu  # or faiss-gpu if using CUDA
+torch>=1.13.0
+transformers>=4.30.0
+
+# File handling & cleaning
+pdfplumber
+python-docx
+pandas
+beautifulsoup4
+lxml
+
+# Utility & Logging
+tqdm
+python-dotenv
+
+# Optional: for UI if needed later
+streamlit
+fastapi
+uvicorn
+streamlit==1.27.2
+torch==2.0.1
+
+# Jupyter Notebook (for data visualization and Analysis)
+jupyterlab
+jupyterlab-lsp
+pandas
+matplotlib
+seaborn
+plotly
+wordcloud
+nbformat
