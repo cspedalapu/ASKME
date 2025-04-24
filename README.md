@@ -9,29 +9,29 @@ ASKME is an intelligent GenAI-powered assistant designed to transform university
 
 University departments are overwhelmed by thousands of repetitive queries each semester, resulting in:
 
-Long response delays during peak periods
+    Long response delays during peak periods
 
-Inconsistent or incomplete information from different departments
+    Inconsistent or incomplete information from different departments
 
-High dependency on limited staff hours (8 AM – 5 PM)
+    High dependency on limited staff hours (8 AM – 5 PM)
 
-Lack of 24/7, personalized assistance for critical student issues (visa, scholarship, course selection, etc.)
+    Lack of 24/7, personalized assistance for critical student issues (visa, scholarship, course selection, etc.)
 
 ASKME addresses these issues by providing an AI-driven, always-available support system tailored to the academic environment.  
 
 ### Objectives
 
-✅ Automate academic and administrative FAQ responses using LLMs
+    ✅ Automate academic and administrative FAQ responses using LLMs
 
-✅ Support personalized and multilingual responses with context retention
+    ✅ Support personalized and multilingual responses with context retention
 
-✅ Reduce human staff workload and response wait times
+    ✅ Reduce human staff workload and response wait times
 
-✅ Build a scalable and accurate AI assistant for university environments
+    ✅ Build a scalable and accurate AI assistant for university environments
 
-✅ Enable document-level understanding from PDF, web, and JSON content
+    ✅ Enable document-level understanding from PDF, web, and JSON content
 
-✅ Track and log queries for analytics, feedback, and improvement
+    ✅ Track and log queries for analytics, feedback, and improvement
 
 
 ### Tech Stack:
@@ -54,75 +54,75 @@ ASKME addresses these issues by providing an AI-driven, always-available support
 
 **1. Data Collection & Cleaning**
 
-Parsed PDFs, DOCX, JSON, TXT
+    Parsed PDFs, DOCX, JSON, TXT
 
-Manual extraction and filtering
+    Manual extraction and filtering
 
 **2.Preprocessing Pipeline**
 
-Regex cleanup, whitespace normalization, lowercase conversion
+    Regex cleanup, whitespace normalization, lowercase conversion
 
 **3.Knowledge Base Construction**
 
-Chunking using RecursiveCharacterTextSplitter
+    Chunking using RecursiveCharacterTextSplitter
 
-SentenceSplitter with overlap for better context
+    SentenceSplitter with overlap for better context
 
-Embedding via SentenceTransformers (BAAI/bge-m3)
+    Embedding via SentenceTransformers (BAAI/bge-m3)
 
-Storage using ChromaDB
+    Storage using ChromaDB
 
 **4.RAG Pipeline**
 
-Query vectorization and similarity search
+    Query vectorization and similarity search
 
-Reranking modules for high relevance
+    Reranking modules for high relevance
 
-Prompt engineering and LLM context integration
+    Prompt engineering and LLM context integration
 
 **5.Evaluation & Analytics**
 
-Semantic Similarity (BERTScore)
+    Semantic Similarity (BERTScore)
 
-Faithfulness, Correctness, Completeness, Fluency
+    Faithfulness, Correctness, Completeness, Fluency
 
-Evidently AI Metrics
+    Evidently AI Metrics
 
 **6.UI and Interaction**
 
-Streamlit-based interface for real-time question answering
+    Streamlit-based interface for real-time question answering
 
-Local hosting with input logging and source traceability 
+    Local hosting with input logging and source traceability 
 
 
 ### Results Summary
-BERTScore F1: 0.82–0.88 → High semantic overlap
+    BERTScore F1: 0.82–0.88 → High semantic overlap
 
-Human eval: Majority responses rated “Relevant” and “Fluent”
+    Human eval: Majority responses rated “Relevant” and “Fluent”
 
-Reranking improves context relevance over vanilla vector similarity
+    Reranking improves context relevance over vanilla vector similarity
 
-Time: OpenAI GPT-4o model performs significantly faster than Ollama
+    Time: OpenAI GPT-4o model performs significantly faster than Ollama
 
 ### Future Work
-Integrate agentic AI for workflow automation
+    Integrate agentic AI for workflow automation
 
-Agentic AI for task automation
+    Agentic AI for task automation
 
-Dynamic context length control
+    Dynamic context length control
 
-Enhance multilingual and regional support
+    Enhance multilingual and regional support
 
-Fine-tuning LLMs on domain-specific Q&A
+    Fine-tuning LLMs on domain-specific Q&A
 
-Expansion to multimodal inputs
+    Expansion to multimodal inputs
 
-Real-time chatbot deployment for eider adoption
+    Real-time chatbot deployment for eider adoption
 
 
 
 ### Authors
 
-Christian Bridge
+    Christian Bridge
 
-Chandrasekhar Pedalapu
+    Chandrasekhar Pedalapu
