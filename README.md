@@ -36,9 +36,13 @@ ASKME addresses these issues by providing an AI-driven, always-available support
 ### Tech Stack: 
 
 | Component | Tools / Frameworks |
-|----------|----------|----------|
+
+|:-------------|:--------------:|
+
 | LLMs | GPT-4o, LLaMA 3.3 (70B) |
+
 | NLP Frameworks| LangChain, SentenceTransformers |
+
 | Embeddings | BAAI/bge-m3, Word2Vec, TF-IDF |
 | RAG Framework | ChromaDB + LLM-based Generator |
 | Data Collection | Web scraping, manual JSON construction |
