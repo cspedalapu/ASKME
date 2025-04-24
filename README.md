@@ -35,6 +35,19 @@ ASKME addresses these issues by providing an AI-driven, always-available support
 
 ### Tech Stack: 
 
+| Component | Tools / Frameworks |
+|----------|----------|----------|
+| LLMs | GPT-4o, LLaMA 3.3 (70B) |
+| NLP Frameworks| LangChain, SentenceTransformers |
+| Embeddings | BAAI/bge-m3, Word2Vec, TF-IDF |
+| RAG Framework | ChromaDB + LLM-based Generator |
+| Data Collection | Web scraping, manual JSON construction |
+| Preprocessing | PyMuPDF, Regex, Lowercasing, Cleaning Scripts |
+| Backend/API | Python Scripts, Modular RAG Pipeline |
+| Frontend (UI) | Streamlit |
+| Deployment | Local (tested on RTX 3080), future on Azure/Salesforce/AWS |
+| Evaluation Tools | Evidently AI, Human Reviews, BERTScore |
+
 ### Project Modules
 
 **1. Data Collection & Cleaning**
