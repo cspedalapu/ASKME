@@ -35,51 +35,50 @@ ASKME addresses these issues by providing an AI-driven, always-available support
 
 ### Tech Stack: 
 
-Tech Stack
+### Project Modules
 
-Component
+**1. Data Collection & Cleaning**
 
-Tools / Frameworks
+Parsed PDFs, DOCX, JSON, TXT
 
-LLMs
+Manual extraction and filtering
 
-GPT-4o, LLaMA 3.3 (70B)
+**2.Preprocessing Pipeline**
 
-NLP Frameworks
+Regex cleanup, whitespace normalization, lowercase conversion
 
-LangChain, SentenceTransformers
+**3.Knowledge Base Construction**
 
-Embeddings
+Chunking using RecursiveCharacterTextSplitter
 
-BAAI/bge-m3, Word2Vec, TF-IDF
+SentenceSplitter with overlap for better context
 
-RAG Framework
+Embedding via SentenceTransformers (BAAI/bge-m3)
 
-ChromaDB + LLM-based Generator
+Storage using ChromaDB
 
-Data Collection
+**4.RAG Pipeline**
 
-Web scraping, manual JSON construction
+Query vectorization and similarity search
 
-Preprocessing
+Reranking modules for high relevance
 
-PyMuPDF, Regex, Lowercasing, Cleaning Scripts
+Prompt engineering and LLM context integration
 
-Backend/API
+**5.Evaluation & Analytics**
 
-Python Scripts, Modular RAG Pipeline
+Semantic Similarity (BERTScore)
 
-Frontend (UI)
+Faithfulness, Correctness, Completeness, Fluency
 
-Streamlit
+Evidently AI Metrics
 
-Deployment
+**6.UI and Interaction**
 
-Local (tested on RTX 3080), future Azure/Salesforce/AWS
+Streamlit-based interface for real-time question answering
 
-Evaluation Tools
+Local hosting with input logging and source traceability 
 
-Evidently AI, Human Reviews, BERTScore
 
 ### Results Summary
 BERTScore F1: 0.82–0.88 → High semantic overlap
@@ -107,7 +106,8 @@ Real-time chatbot deployment for eider adoption
 
 
 
-### Contributors
+### Authors
+
 Christian Bridge
 
 Chandrasekhar Pedalapu
