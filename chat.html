@@ -95,10 +95,7 @@
     </style>
 </head>
 <body>
-    <div class="top-bar">
-        <a href="index.html" class="home-btn">Home</a>
-        <a href="#" class="login-btn">Login</a>
-    </div>
+    <div class="top-bar"></div>
     <style>
         body {
             margin: 0;
@@ -299,15 +296,19 @@
             if (prompt) prompt.style.display = 'none';
             var userMsg = document.createElement('div');
             userMsg.style.margin = '0.5rem 0';
-            userMsg.innerHTML = '<b style="color:#ff6600">You:</b> ' + msg;
+            userMsg.style.display = 'flex';
+            userMsg.style.justifyContent = 'flex-end';
+            userMsg.innerHTML = '<span style="background:#232323; color:#fff; border-radius:1.5rem; padding:0.7rem 1.3rem; max-width:70%; display:inline-block; text-align:right; font-size:1.1rem;">' + msg + '</span>';
             chat.appendChild(userMsg);
             input.value = '';
             chat.scrollTop = chat.scrollHeight;
             // Placeholder bot reply
             setTimeout(function() {
                 var botMsg = document.createElement('div');
-                botMsg.style.margin = '0.5rem 0';
-                botMsg.innerHTML = '<b style="color:#00e676">ASKME:</b> This is a demo. The AI will answer your question here.';
+                botMsg.style.margin = '0.5rem 0 1.5rem 0';
+                botMsg.style.display = 'flex';
+                botMsg.style.justifyContent = 'flex-start';
+                botMsg.innerHTML = '<span style="background:#232323; color:#00e676; border-radius:1.5rem; padding:0.7rem 1.3rem; max-width:70%; display:inline-block; text-align:left; font-size:1.1rem;">This is a demo. The AI will answer your question here.</span>';
                 chat.appendChild(botMsg);
                 chat.scrollTop = chat.scrollHeight;
             }, 600);
