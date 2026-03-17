@@ -98,27 +98,43 @@
         <nav class="sidebar">
             <div class="menu-group">
                 <ul>
-                    <li>CURRENT STUDENTS</li>
-                    <li>FACULTY + STAFF</li>
-                    <li>ALUMNI + FRIENDS</li>
-                    <li>PARENTS + FAMILY</li>
-                    <li>COMMUNITY + VISITORS</li>
-                </ul>
-            </div>
-            <div class="menu-group">
-                <ul>
-                    <li>UNT LIBRARIES</li>
-                    <li>UNT CALENDAR</li>
-                    <li>UNT NEWS</li>
-                    <li>CAMPUS MAP</li>
-                    <li>JOBS AT UNT</li>
+                    <li style="font-size:1.3rem; letter-spacing:1px; color:#fff;">ASKME</li>
                 </ul>
             </div>
         </nav>
-        <main class="main-content">
-            <h2>ASKME Chat Interface</h2>
-            <p>Welcome! Select an option from the left menu or login to start chatting.</p>
-            <!-- Chat interface or other content can go here -->
+        <main class="main-content" style="background:#222; border-radius:18px; min-height:70vh; width:100%; max-width:700px; margin:2rem auto; box-shadow:0 2px 16px rgba(0,0,0,0.12); display:flex; flex-direction:column; align-items:center; justify-content:center;">
+            <h2 style="color:#fff; font-size:2.2rem; font-weight:600; margin-top:3rem;">What can I help with?</h2>
+            <form id="chat-form" onsubmit="event.preventDefault(); sendMessage();" style="width:100%; max-width:480px; margin:3rem auto 0 auto; display:flex; flex-direction:column; align-items:center;">
+                <div style="display:flex; width:100%; background:#333; border-radius:2rem; align-items:center; padding:0.5rem 1rem; box-shadow:0 1px 4px rgba(0,0,0,0.10);">
+                    <input id="chat-input" type="text" placeholder="Ask anything" style="flex:1; background:transparent; border:none; color:#fff; font-size:1.2rem; padding:0.7rem 0.5rem; outline:none;" autocomplete="off" />
+                    <button type="submit" style="background:#ff6600; border:none; border-radius:50%; width:2.5rem; height:2.5rem; display:flex; align-items:center; justify-content:center; margin-left:0.5rem; cursor:pointer;">
+                        <span style="font-size:1.3rem; color:#fff;">&#128483;</span>
+                    </button>
+                </div>
+            </form>
+            <div id="chat-messages" style="width:100%; max-width:480px; min-height:120px; margin:2rem auto 0 auto; background:#181818; border-radius:1rem; padding:1.2rem; color:#fff; font-size:1.1rem; overflow-y:auto; max-height:300px;"></div>
+            <script>
+                function sendMessage() {
+                    var input = document.getElementById('chat-input');
+                    var msg = input.value.trim();
+                    if (!msg) return;
+                    var chat = document.getElementById('chat-messages');
+                    var userMsg = document.createElement('div');
+                    userMsg.style.margin = '0.5rem 0';
+                    userMsg.innerHTML = '<b style="color:#ff6600">You:</b> ' + msg;
+                    chat.appendChild(userMsg);
+                    input.value = '';
+                    chat.scrollTop = chat.scrollHeight;
+                    // Placeholder bot reply
+                    setTimeout(function() {
+                        var botMsg = document.createElement('div');
+                        botMsg.style.margin = '0.5rem 0';
+                        botMsg.innerHTML = '<b style="color:#00e676">ASKME:</b> This is a demo. The AI will answer your question here.';
+                        chat.appendChild(botMsg);
+                        chat.scrollTop = chat.scrollHeight;
+                    }, 600);
+                }
+            </script>
         </main>
     </div>
 </body>
