@@ -191,6 +191,40 @@
             display: flex;
             flex-direction: column;
             justify-content: flex-end;
+            gap: 0.2rem;
+        }
+
+        .user-message {
+            display: flex;
+            justify-content: flex-end;
+            margin: 0.5rem 0;
+        }
+        .user-message span {
+            background: #232323;
+            color: #fff;
+            border-radius: 1.5rem;
+            padding: 0.7rem 1.3rem;
+            max-width: 70%;
+            display: inline-block;
+            text-align: right;
+            font-size: 1.1rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+        }
+        .bot-message {
+            display: flex;
+            justify-content: flex-start;
+            margin: 0.5rem 0 1.5rem 0;
+        }
+        .bot-message span {
+            background: #232323;
+            color: #00e676;
+            border-radius: 1.5rem;
+            padding: 0.7rem 1.3rem;
+            max-width: 70%;
+            display: inline-block;
+            text-align: left;
+            font-size: 1.1rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.12);
         }
         .chat-scroll::-webkit-scrollbar {
             width: 12px;
@@ -294,43 +328,18 @@
             var chat = document.getElementById('chat-messages');
             var prompt = document.getElementById('centerPrompt');
             if (prompt) prompt.style.display = 'none';
+            // User message (right)
             var userMsg = document.createElement('div');
-            userMsg.style.margin = '0.5rem 0';
-            userMsg.style.display = 'flex';
-            userMsg.style.justifyContent = 'flex-end';
-            userMsg.innerHTML = '<span style="background:#232323; color:#fff; border-radius:1.5rem; padding:0.7rem 1.3rem; max-width:70%; display:inline-block; text-align:right; font-size:1.1rem;">' + msg + '</span>';
+            userMsg.className = 'user-message';
+            userMsg.innerHTML = '<span>' + msg + '</span>';
             chat.appendChild(userMsg);
             input.value = '';
             chat.scrollTop = chat.scrollHeight;
-            // Placeholder bot reply
+            // Bot message (left)
             setTimeout(function() {
                 var botMsg = document.createElement('div');
-                botMsg.style.margin = '0.5rem 0 1.5rem 0';
-                botMsg.style.display = 'flex';
-                botMsg.style.justifyContent = 'flex-start';
-                botMsg.innerHTML = '<span style="background:#232323; color:#00e676; border-radius:1.5rem; padding:0.7rem 1.3rem; max-width:70%; display:inline-block; text-align:left; font-size:1.1rem;">This is a demo. The AI will answer your question here.</span>';
-                chat.appendChild(botMsg);
-                chat.scrollTop = chat.scrollHeight;
-            }, 600);
-        }
-    </script>
-    <script>
-        function sendMessage() {
-            var input = document.getElementById('chat-input');
-            var msg = input.value.trim();
-            if (!msg) return;
-            var chat = document.getElementById('chat-messages');
-            var userMsg = document.createElement('div');
-            userMsg.style.margin = '0.5rem 0';
-            userMsg.innerHTML = '<b style="color:#ff6600">You:</b> ' + msg;
-            chat.appendChild(userMsg);
-            input.value = '';
-            chat.scrollTop = chat.scrollHeight;
-            // Placeholder bot reply
-            setTimeout(function() {
-                var botMsg = document.createElement('div');
-                botMsg.style.margin = '0.5rem 0';
-                botMsg.innerHTML = '<b style="color:#00e676">ASKME:</b> This is a demo. The AI will answer your question here.';
+                botMsg.className = 'bot-message';
+                botMsg.innerHTML = '<span>This is a demo. The AI will answer your question here.</span>';
                 chat.appendChild(botMsg);
                 chat.scrollTop = chat.scrollHeight;
             }, 600);
