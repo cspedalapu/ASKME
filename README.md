@@ -126,3 +126,18 @@ ASKME addresses these issues by providing an AI-driven, always-available support
     Christian Bridge
 
     Chandrasekhar Pedalapu
+
+---
+
+## Project Structure Update (March 2026)
+
+- The `pipeline/` folder has been moved to `backend/pipeline/` for better organization and to prepare for future backend/API development.
+- All backend logic, data processing, and core pipeline scripts are now under `backend/`.
+- The rest of the project structure remains unchanged.
+
+### Updated Folder Overview
+
+- `backend/pipeline/`: Data processing, embedding, model routing, querying, and core pipeline logic.
+- `analysis/`: Jupyter notebooks and scripts for data analysis, visualization, and evaluation.
+- `data/`: Raw and processed datasets (sensitive, not tracked by git).
+- `output/`: Generated results, model outputs, and files produced by the pipeline or analysis scripts (not tracked by git).
