@@ -54,11 +54,16 @@
         .sidebar {
             background: #333;
             color: #fff;
+            min-width: 180px;
+            max-width: 400px;
             width: 270px;
-            padding: 2rem 1.5rem;
+            padding: 2rem 1rem 2rem 1.5rem;
             display: flex;
             flex-direction: column;
             justify-content: flex-start;
+            resize: horizontal;
+            overflow: auto;
+            border-right: 3px solid #222;
         }
         .sidebar .menu-group {
             margin-bottom: 2.5rem;
@@ -95,23 +100,19 @@
         <a href="#" class="login-btn">Login</a>
     </div>
     <div class="container">
-        <nav class="sidebar" style="display: flex; flex-direction: column; justify-content: flex-start;">
-            <div style="display: flex; flex-direction: row; gap: 2.5rem;">
-                <ul style="list-style: none; padding: 0; margin: 0;">
-                    <li style="font-weight:bold; margin-bottom:1.1rem; font-size:1.1rem; letter-spacing:0.5px;">CURRENT STUDENTS</li>
-                    <li style="font-weight:bold; margin-bottom:1.1rem; font-size:1.1rem; letter-spacing:0.5px;">FACULTY + STAFF</li>
-                    <li style="font-weight:bold; margin-bottom:1.1rem; font-size:1.1rem; letter-spacing:0.5px;">ALUMNI + FRIENDS</li>
-                    <li style="font-weight:bold; margin-bottom:1.1rem; font-size:1.1rem; letter-spacing:0.5px;">PARENTS + FAMILY</li>
-                    <li style="font-weight:bold; margin-bottom:1.1rem; font-size:1.1rem; letter-spacing:0.5px;">COMMUNITY + VISITORS</li>
-                </ul>
-                <ul style="list-style: none; padding: 0; margin: 0 0 0 2.5rem;">
-                    <li style="font-weight:bold; margin-bottom:1.1rem; font-size:1.1rem; letter-spacing:0.5px;">UNT LIBRARIES</li>
-                    <li style="font-weight:bold; margin-bottom:1.1rem; font-size:1.1rem; letter-spacing:0.5px;">UNT CALENDAR</li>
-                    <li style="font-weight:bold; margin-bottom:1.1rem; font-size:1.1rem; letter-spacing:0.5px;">UNT NEWS</li>
-                    <li style="font-weight:bold; margin-bottom:1.1rem; font-size:1.1rem; letter-spacing:0.5px;">CAMPUS MAP</li>
-                    <li style="font-weight:bold; margin-bottom:1.1rem; font-size:1.1rem; letter-spacing:0.5px;">JOBS AT UNT</li>
-                </ul>
-            </div>
+        <nav class="sidebar">
+            <ul style="list-style: none; padding: 0; margin: 0; font-size:1.18rem;">
+                <li style="font-weight:bold; margin-bottom:1.3rem; letter-spacing:0.5px; font-size:1.18rem;">CURRENT STUDENTS</li>
+                <li style="font-weight:bold; margin-bottom:1.3rem; letter-spacing:0.5px; font-size:1.18rem;">FACULTY + STAFF</li>
+                <li style="font-weight:bold; margin-bottom:1.3rem; letter-spacing:0.5px; font-size:1.18rem;">ALUMNI + FRIENDS</li>
+                <li style="font-weight:bold; margin-bottom:1.3rem; letter-spacing:0.5px; font-size:1.18rem;">PARENTS + FAMILY</li>
+                <li style="font-weight:bold; margin-bottom:1.3rem; letter-spacing:0.5px; font-size:1.18rem;">COMMUNITY + VISITORS</li>
+                <li style="font-weight:bold; margin-bottom:1.3rem; letter-spacing:0.5px; font-size:1.18rem;">UNT LIBRARIES</li>
+                <li style="font-weight:bold; margin-bottom:1.3rem; letter-spacing:0.5px; font-size:1.18rem;">UNT CALENDAR</li>
+                <li style="font-weight:bold; margin-bottom:1.3rem; letter-spacing:0.5px; font-size:1.18rem;">UNT NEWS</li>
+                <li style="font-weight:bold; margin-bottom:1.3rem; letter-spacing:0.5px; font-size:1.18rem;">CAMPUS MAP</li>
+                <li style="font-weight:bold; margin-bottom:1.3rem; letter-spacing:0.5px; font-size:1.18rem;">JOBS AT UNT</li>
+            </ul>
         </nav>
         <main class="main-content" style="background:#222; border-radius:18px; min-height:70vh; width:100%; max-width:700px; margin:2rem auto; box-shadow:0 2px 16px rgba(0,0,0,0.12); display:flex; flex-direction:column; align-items:center; justify-content:center;">
             <h2 style="color:#fff; font-size:2.2rem; font-weight:600; margin-top:3rem;">What can I help with?</h2>
