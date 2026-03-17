@@ -91,15 +91,57 @@
     </style>
 </head>
 <body>
+    <script>
+        function showChat() {
+            document.getElementById('chatbox-container').style.display = 'block';
+            document.getElementById('chatbox-container').scrollIntoView({behavior: 'smooth'});
+        }
+        window.onload = function() {
+            var btn = document.querySelector('.cta-buttons a[href="#get-started"]');
+            if (btn) btn.onclick = function(e) { e.preventDefault(); showChat(); };
+        }
+    </script>
+</head>
+<body>
     <header>
         <h1>ASKME</h1>
         <p>AI Support for Knowledge Management & Engagement<br><span style="font-size:1rem;">GenAI-Powered College Advisor</span></p>
         <div class="cta-buttons">
-            <a href="#get-started">Get Started</a>
+            <a href="chat.html">Get Started</a>
             <a href="#about">Learn More</a>
         </div>
     </header>
     <main>
+        <div id="chatbox-container" style="display:none; max-width: 500px; margin: 2rem auto 1rem auto; background: #f0f8f4; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,133,62,0.10); padding: 1.5rem;">
+            <h2 style="color:#00853e; margin-top:0;">ASKME Chat</h2>
+            <div id="chat-messages" style="height:180px; overflow-y:auto; background:#fff; border-radius:6px; border:1px solid #e0e0e0; padding:1rem; margin-bottom:1rem; font-size:1rem;"></div>
+            <form id="chat-form" onsubmit="event.preventDefault(); sendMessage();" style="display:flex; gap:0.5rem;">
+                <input id="chat-input" type="text" placeholder="Type your question..." style="flex:1; padding:0.7rem; border-radius:4px; border:1px solid #ccc; font-size:1rem;" autocomplete="off" />
+                <button type="submit" style="background:#00853e; color:#fff; border:none; border-radius:4px; padding:0 1.2rem; font-weight:bold; cursor:pointer;">Send</button>
+            </form>
+        </div>
+        <script>
+            function sendMessage() {
+                var input = document.getElementById('chat-input');
+                var msg = input.value.trim();
+                if (!msg) return;
+                var chat = document.getElementById('chat-messages');
+                var userMsg = document.createElement('div');
+                userMsg.style.margin = '0.5rem 0';
+                userMsg.innerHTML = '<b>You:</b> ' + msg;
+                chat.appendChild(userMsg);
+                input.value = '';
+                chat.scrollTop = chat.scrollHeight;
+                // Placeholder bot reply
+                setTimeout(function() {
+                    var botMsg = document.createElement('div');
+                    botMsg.style.margin = '0.5rem 0';
+                    botMsg.innerHTML = '<b>ASKME:</b> This is a demo. The AI will answer your question here.';
+                    chat.appendChild(botMsg);
+                    chat.scrollTop = chat.scrollHeight;
+                }, 600);
+            }
+        </script>
         <section id="about">
             <h2>Our Mission</h2>
             <p>ASKME is an intelligent GenAI-powered assistant designed to transform university support services. It delivers real-time, context-aware, and multilingual responses to student queries — with a special focus on international student needs — through advanced NLP, Retrieval-Augmented Generation (RAG), and fine-tuned Large Language Models (LLMs).</p>
@@ -153,7 +195,7 @@
         </section>
         <section id="get-started">
             <h2>Get Started</h2>
-            <p>Ready to transform your university support? <a href="#">Contact us</a> or explore the documentation to deploy ASKME at your institution.</p>
+            <p>Click the <b>Get Started</b> button above to open the ASKME chat interface and try it out!</p>
         </section>
     </main>
     <footer>

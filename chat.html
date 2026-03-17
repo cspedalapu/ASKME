@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ASKME Chat</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: #f7f7f7;
+            color: #222;
+        }
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #00853e;
+            color: #fff;
+            padding: 1rem 2rem;
+        }
+        .top-bar .home-btn {
+            background: #fff;
+            color: #00853e;
+            border: 2px solid #00853e;
+            border-radius: 4px;
+            padding: 0.5rem 1.2rem;
+            font-weight: bold;
+            text-decoration: none;
+            transition: background 0.2s, color 0.2s;
+        }
+        .top-bar .home-btn:hover {
+            background: #00853e;
+            color: #fff;
+        }
+        .top-bar .login-btn {
+            background: #fff;
+            color: #00853e;
+            border: 2px solid #00853e;
+            border-radius: 4px;
+            padding: 0.5rem 1.2rem;
+            font-weight: bold;
+            text-decoration: none;
+            transition: background 0.2s, color 0.2s;
+        }
+        .top-bar .login-btn:hover {
+            background: #00853e;
+            color: #fff;
+        }
+        .container {
+            display: flex;
+            min-height: 90vh;
+        }
+        .sidebar {
+            background: #333;
+            color: #fff;
+            width: 270px;
+            padding: 2rem 1.5rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+        }
+        .sidebar .menu-group {
+            margin-bottom: 2.5rem;
+        }
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .sidebar li {
+            font-weight: bold;
+            margin-bottom: 1.1rem;
+            font-size: 1.1rem;
+            letter-spacing: 0.5px;
+        }
+        .main-content {
+            flex: 1;
+            padding: 2.5rem 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+        }
+        @media (max-width: 900px) {
+            .container { flex-direction: column; }
+            .sidebar { width: 100%; flex-direction: row; flex-wrap: wrap; padding: 1rem; }
+            .main-content { padding: 1rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="top-bar">
+        <a href="index.html" class="home-btn">Home</a>
+        <a href="#" class="login-btn">Login</a>
+    </div>
+    <div class="container">
+        <nav class="sidebar">
+            <div class="menu-group">
+                <ul>
+                    <li>CURRENT STUDENTS</li>
+                    <li>FACULTY + STAFF</li>
+                    <li>ALUMNI + FRIENDS</li>
+                    <li>PARENTS + FAMILY</li>
+                    <li>COMMUNITY + VISITORS</li>
+                </ul>
+            </div>
+            <div class="menu-group">
+                <ul>
+                    <li>UNT LIBRARIES</li>
+                    <li>UNT CALENDAR</li>
+                    <li>UNT NEWS</li>
+                    <li>CAMPUS MAP</li>
+                    <li>JOBS AT UNT</li>
+                </ul>
+            </div>
+        </nav>
+        <main class="main-content">
+            <h2>ASKME Chat Interface</h2>
+            <p>Welcome! Select an option from the left menu or login to start chatting.</p>
+            <!-- Chat interface or other content can go here -->
+        </main>
+    </div>
+</body>
+</html>
