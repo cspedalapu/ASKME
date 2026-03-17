@@ -1,2 +1,18 @@
 data/
 .env
+output/
+__pycache__/
+*.pyc
+.venv/
+venv/
+# Jupyter and editor files
+*.ipynb_checkpoints
+.DS_Store
+.idea/
+.vscode/
+# Logs and temp files
+*.log
+*.sqlite3
+*.bak
+# Other
+*.swp
