@@ -1,6 +1,9 @@
 from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS
 import os
+import sys
+sys.path.append(os.path.join(os.path.dirname(__file__), 'backend'))
+from backend.pipeline.rag_engine import get_reranked_chunks, generate_answer
 
 app = Flask(__name__, static_folder='frontend')
 CORS(app)
@@ -9,8 +12,13 @@ CORS(app)
 def chat():
     data = request.get_json()
     user_message = data.get('message', '')
-    # TODO: Replace with real AI response logic
-    ai_response = f"Echo: {user_message}"
+    if not user_message.strip():
+        return jsonify({'response': 'Please enter a question.'})
+    try:
+        top_chunks = get_reranked_chunks(user_message)
+        ai_response = generate_answer(top_chunks, user_message)
+    except Exception as e:
+        ai_response = f"Error: {str(e)}"
     return jsonify({'response': ai_response})
 
 @app.route('/', defaults={'path': 'index.html'})

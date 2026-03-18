@@ -16,3 +16,7 @@ venv/
 *.bak
 # Other
 *.swp
+OPENAI_API_KEY
+*api_key*
+*apikey*
+*API_KEY*
