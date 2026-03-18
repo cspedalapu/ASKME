@@ -1,1 +1,84 @@
-<!-- Move your existing chat.html content here -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ASKME Chat</title>
+    <style>
+        /* ...existing styles... */
+    </style>
+</head>
+<body>
+    <div class="top-bar"></div>
+    <style>
+        /* ...existing styles... */
+    </style>
+    <div style="display:flex; height:100vh; background:#181818;">
+        <nav class="sidebar">
+            <div class="logo">ASKME</div>
+            <ul>
+                <li>CURRENT STUDENTS</li>
+                <li>FACULTY + STAFF</li>
+                <li>ALUMNI + FRIENDS</li>
+                <li>PARENTS + FAMILY</li>
+                <li>COMMUNITY + VISITORS</li>
+                <li>UNT LIBRARIES</li>
+                <li>UNT CALENDAR</li>
+                <li>UNT NEWS</li>
+                <li>CAMPUS MAP</li>
+                <li>JOBS AT UNT</li>
+            </ul>
+        </nav>
+        <div class="main-area" style="width:100%;">
+            <div class="top-bar">
+                <a href="index.html" class="home-link" style="color:#00853e; font-weight:bold; font-size:1.1rem; text-decoration:none; margin-right:1.5rem;">Home</a>
+                <button class="login-btn">Login</button>
+            </div>
+            <div class="center-prompt" id="centerPrompt">ASKME</div>
+            <div class="chat-scroll" id="chat-messages"></div>
+            <form id="chat-form" class="chat-form" onsubmit="event.preventDefault(); sendMessage();">
+                <div class="chat-input-row">
+                    <input id="chat-input" type="text" placeholder="Ask anything" autocomplete="off" />
+                    <button type="submit"><span>&#128483;</span></button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script>
+        async function sendMessage() {
+            var input = document.getElementById('chat-input');
+            var msg = input.value.trim();
+            if (!msg) return;
+            var chat = document.getElementById('chat-messages');
+            var prompt = document.getElementById('centerPrompt');
+            if (prompt) prompt.style.display = 'none';
+            // User message (right)
+            var userMsg = document.createElement('div');
+            userMsg.className = 'user-message';
+            userMsg.innerHTML = '<span>' + msg + '</span>';
+            chat.appendChild(userMsg);
+            input.value = '';
+            chat.scrollTop = chat.scrollHeight;
+            // Bot message (left, loading...)
+            var botMsg = document.createElement('div');
+            botMsg.className = 'bot-message';
+            botMsg.innerHTML = '<span>Thinking...</span>';
+            chat.appendChild(botMsg);
+            chat.scrollTop = chat.scrollHeight;
+            // Call backend
+            try {
+                const response = await fetch('/chat', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ message: msg })
+                });
+                const data = await response.json();
+                botMsg.innerHTML = '<span>' + (data.response || 'No response from AI.') + '</span>';
+            } catch (e) {
+                botMsg.innerHTML = '<span style="color:red;">Error contacting backend.</span>';
+            }
+            chat.scrollTop = chat.scrollHeight;
+        }
+    </script>
+</body>
+</html>
