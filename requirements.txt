@@ -1,7 +1,6 @@
 # Core Dependencies
 sentence-transformers==2.2.2
 faiss-cpu  # or faiss-gpu if using CUDA
-torch>=1.13.0
 transformers>=4.30.0
 
 # File handling & cleaning
@@ -20,7 +19,7 @@ streamlit
 fastapi
 uvicorn
 streamlit==1.27.2
-torch==2.0.1
+torch>=2.6.0
 
 # Jupyter Notebook (for data visualization and Analysis)
 jupyterlab
