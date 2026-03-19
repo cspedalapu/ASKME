@@ -3,208 +3,426 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ASKME – AI Support for Knowledge Management & Engagement</title>
+    <title>ASKME - AI Support for Knowledge Management & Engagement</title>
     <style>
+        :root {
+            --bg: #111111;
+            --bg-soft: #181818;
+            --panel: #1f1f1f;
+            --panel-soft: #252525;
+            --text: #f4f4f4;
+            --muted: #c8c8c8;
+            --line: rgba(255, 255, 255, 0.08);
+            --accent: #00853e;
+            --accent-soft: #19a45d;
+            --warm: #ff7a0a;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
-            font-family: 'Segoe UI', Arial, sans-serif;
             margin: 0;
-            background: #f7f7f7;
-            color: #222;
+            font-family: "Segoe UI", "SegoeUI", system-ui, Arial, sans-serif;
+            background:
+                radial-gradient(circle at top right, rgba(0, 133, 62, 0.18), transparent 24%),
+                linear-gradient(180deg, #181818 0%, #101010 100%);
+            color: var(--text);
         }
-        header {
-            background: #00853e;
-            color: #fff;
-            padding: 2rem 1rem 1rem 1rem;
-            text-align: center;
+
+        a {
+            color: inherit;
         }
-        header h1 {
-            margin: 0 0 0.5rem 0;
-            font-size: 2.5rem;
-            letter-spacing: 1px;
+
+        .page-shell {
+            width: min(1120px, calc(100vw - 2rem));
+            margin: 0 auto;
         }
-        header p {
-            font-size: 1.2rem;
-            margin: 0 0 1rem 0;
+
+        .topbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            padding: 1.2rem 0;
         }
-        .cta-buttons {
-            margin: 1rem 0;
-        }
-        .cta-buttons a {
-            display: inline-block;
-            background: #fff;
-            color: #00853e;
-            border: 2px solid #00853e;
-            border-radius: 4px;
-            padding: 0.7rem 1.5rem;
-            margin: 0 0.5rem;
-            font-weight: bold;
+
+        .brand {
+            font-weight: 800;
+            letter-spacing: 0.08em;
             text-decoration: none;
-            transition: background 0.2s, color 0.2s;
         }
-        .cta-buttons a:hover {
-            background: #00853e;
-            color: #fff;
+
+        .topbar-links {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
         }
-        main {
-            max-width: 900px;
-            margin: 2rem auto;
-            background: #fff;
-            border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+
+        .topbar-links a {
+            text-decoration: none;
+            color: var(--muted);
+        }
+
+        .topbar-links a:hover {
+            color: var(--text);
+        }
+
+        .hero {
+            padding: 1.2rem 0 2rem;
+        }
+
+        .hero-card {
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 1.5rem;
+            align-items: stretch;
             padding: 2rem;
+            border: 1px solid var(--line);
+            border-radius: 1.8rem;
+            background:
+                linear-gradient(135deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.01)),
+                rgba(21, 21, 21, 0.96);
+            box-shadow: 0 18px 50px rgba(0, 0, 0, 0.22);
         }
-        section {
-            margin-bottom: 2.5rem;
+
+        .hero-copy {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
         }
-        h2 {
-            color: #00853e;
-            margin-top: 0;
+
+        .eyebrow {
+            margin: 0 0 0.85rem;
+            font-size: 0.82rem;
+            font-weight: 700;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            color: #9ed7b4;
         }
-        .features {
+
+        .hero h1 {
+            margin: 0;
+            font-size: clamp(2.4rem, 6vw, 4.2rem);
+            line-height: 1;
+            letter-spacing: 0.04em;
+        }
+
+        .hero-subtitle {
+            margin: 1rem 0 0;
+            font-size: 1.1rem;
+            color: #f1f1f1;
+        }
+
+        .hero-description {
+            margin: 1rem 0 0;
+            max-width: 62ch;
+            line-height: 1.75;
+            color: var(--muted);
+        }
+
+        .hero-actions {
             display: flex;
             flex-wrap: wrap;
-            gap: 2rem;
+            gap: 0.85rem;
+            margin-top: 1.5rem;
         }
-        .feature {
-            flex: 1 1 250px;
-            background: #f0f8f4;
-            border-radius: 6px;
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 2.9rem;
+            padding: 0.8rem 1.25rem;
+            border-radius: 999px;
+            text-decoration: none;
+            font-weight: 700;
+            transition: transform 0.18s ease, background 0.18s ease, border-color 0.18s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-1px);
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: #ffffff;
+        }
+
+        .btn-primary:hover {
+            background: var(--accent-soft);
+        }
+
+        .btn-secondary {
+            border: 1px solid var(--line);
+            color: var(--text);
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.06);
+        }
+
+        .hero-panel {
+            padding: 1.4rem;
+            border-radius: 1.45rem;
+            background:
+                linear-gradient(180deg, rgba(0, 133, 62, 0.12), rgba(255, 255, 255, 0.02)),
+                var(--panel);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            display: grid;
+            gap: 0.9rem;
+        }
+
+        .hero-panel h2 {
+            margin: 0;
+            font-size: 1rem;
+            letter-spacing: 0.03em;
+        }
+
+        .mini-card {
+            padding: 0.95rem 1rem;
+            border-radius: 1rem;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .mini-card strong {
+            display: block;
+            margin-bottom: 0.35rem;
+            color: #ffffff;
+        }
+
+        .mini-card span {
+            color: var(--muted);
+            line-height: 1.55;
+        }
+
+        .content {
+            padding: 0.5rem 0 3rem;
+        }
+
+        section {
+            margin-top: 1.4rem;
+            padding: 1.5rem;
+            border-radius: 1.4rem;
+            border: 1px solid var(--line);
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        section h2 {
+            margin: 0 0 1rem;
+            font-size: 1.5rem;
+        }
+
+        section p,
+        section li {
+            color: var(--muted);
+            line-height: 1.75;
+        }
+
+        .grid {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .grid.two {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .grid.three {
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+
+        .info-card {
             padding: 1.2rem;
-            box-shadow: 0 1px 4px rgba(0,133,62,0.05);
+            border-radius: 1rem;
+            background: var(--panel);
+            border: 1px solid rgba(255, 255, 255, 0.05);
         }
-        footer {
-            background: #222;
-            color: #fff;
+
+        .info-card h3 {
+            margin: 0 0 0.6rem;
+            font-size: 1.08rem;
+            color: #ffffff;
+        }
+
+        .tech-list,
+        .audience-list {
+            margin: 0;
+            padding-left: 1.2rem;
+        }
+
+        .footer {
+            padding: 0 0 2rem;
+            color: #a8a8a8;
             text-align: center;
-            padding: 1.5rem 1rem;
-            margin-top: 2rem;
         }
-        .footer-links a {
-            color: #fff;
-            margin: 0 0.7rem;
-            text-decoration: underline;
+
+        .footer a {
+            color: #d8d8d8;
         }
-        @media (max-width: 700px) {
-            main { padding: 1rem; }
-            .features { flex-direction: column; }
+
+        @media (max-width: 900px) {
+            .hero-card,
+            .grid.two,
+            .grid.three {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-card {
+                padding: 1.35rem;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .page-shell {
+                width: calc(100vw - 1rem);
+            }
+
+            .topbar {
+                padding: 1rem 0 0.6rem;
+            }
+
+            .topbar-links {
+                gap: 0.75rem;
+                font-size: 0.92rem;
+            }
+
+            section {
+                padding: 1.15rem;
+            }
         }
     </style>
 </head>
 <body>
-    <script>
-        function showChat() {
-            document.getElementById('chatbox-container').style.display = 'block';
-            document.getElementById('chatbox-container').scrollIntoView({behavior: 'smooth'});
-        }
-        window.onload = function() {
-            var btn = document.querySelector('.cta-buttons a[href="#get-started"]');
-            if (btn) btn.onclick = function(e) { e.preventDefault(); showChat(); };
-        }
-    </script>
-</head>
-<body>
-    <header>
-        <h1>ASKME</h1>
-        <p>AI Support for Knowledge Management & Engagement<br><span style="font-size:1rem;">GenAI-Powered College Advisor</span></p>
-        <div class="cta-buttons">
-            <a href="chat.html">Get Started</a>
-            <a href="#about">Learn More</a>
-        </div>
-    </header>
-    <main>
-        <div id="chatbox-container" style="display:none; max-width: 500px; margin: 2rem auto 1rem auto; background: #f0f8f4; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,133,62,0.10); padding: 1.5rem;">
-            <h2 style="color:#00853e; margin-top:0;">ASKME Chat</h2>
-            <div id="chat-messages" style="height:180px; overflow-y:auto; background:#fff; border-radius:6px; border:1px solid #e0e0e0; padding:1rem; margin-bottom:1rem; font-size:1rem;"></div>
-            <form id="chat-form" onsubmit="event.preventDefault(); sendMessage();" style="display:flex; gap:0.5rem;">
-                <input id="chat-input" type="text" placeholder="Type your question..." style="flex:1; padding:0.7rem; border-radius:4px; border:1px solid #ccc; font-size:1rem;" autocomplete="off" />
-                <button type="submit" style="background:#00853e; color:#fff; border:none; border-radius:4px; padding:0 1.2rem; font-weight:bold; cursor:pointer;">Send</button>
-            </form>
-        </div>
-        <script>
-            function sendMessage() {
-                var input = document.getElementById('chat-input');
-                var msg = input.value.trim();
-                if (!msg) return;
-                var chat = document.getElementById('chat-messages');
-                var userMsg = document.createElement('div');
-                userMsg.style.margin = '0.5rem 0';
-                userMsg.innerHTML = '<b>You:</b> ' + msg;
-                chat.appendChild(userMsg);
-                input.value = '';
-                chat.scrollTop = chat.scrollHeight;
-                // Placeholder bot reply
-                setTimeout(function() {
-                    var botMsg = document.createElement('div');
-                    botMsg.style.margin = '0.5rem 0';
-                    botMsg.innerHTML = '<b>ASKME:</b> This is a demo. The AI will answer your question here.';
-                    chat.appendChild(botMsg);
-                    chat.scrollTop = chat.scrollHeight;
-                }, 600);
-            }
-        </script>
-        <section id="about">
-            <h2>Our Mission</h2>
-            <p>ASKME is an intelligent GenAI-powered assistant designed to transform university support services. It delivers real-time, context-aware, and multilingual responses to student queries — with a special focus on international student needs — through advanced NLP, Retrieval-Augmented Generation (RAG), and fine-tuned Large Language Models (LLMs).</p>
-        </section>
-        <section>
-            <h2>Why ASKME?</h2>
-            <div class="features">
-                <div class="feature">
-                    <h3>24/7 Academic Support</h3>
-                    <p>Always-available, AI-driven answers to student and staff questions, reducing wait times and staff workload.</p>
+    <div class="page-shell">
+        <header class="topbar">
+            <a class="brand" href="home.html">ASKME</a>
+            <nav class="topbar-links" aria-label="Primary">
+                <a href="#about">About</a>
+                <a href="#features">Features</a>
+                <a href="#technology">Technology</a>
+                <a href="chat.html">Chat</a>
+            </nav>
+        </header>
+
+        <main>
+            <section class="hero">
+                <div class="hero-card">
+                    <div class="hero-copy">
+                        <p class="eyebrow">GenAI-Powered College Advisor</p>
+                        <h1>ASKME</h1>
+                        <p class="hero-subtitle">AI Support for Knowledge Management & Engagement</p>
+                        <p class="hero-description">
+                            ASKME helps universities respond to academic, administrative, and student-life questions with
+                            fast, context-aware answers powered by Retrieval-Augmented Generation and large language models.
+                        </p>
+                        <div class="hero-actions">
+                            <a class="btn btn-primary" href="chat.html">Open Chat</a>
+                            <a class="btn btn-secondary" href="#about">Learn More</a>
+                        </div>
+                    </div>
+
+                    <aside class="hero-panel" aria-label="Highlights">
+                        <h2>What It Helps With</h2>
+                        <div class="mini-card">
+                            <strong>Student Support</strong>
+                            <span>Answers admissions, academics, campus services, and international student questions.</span>
+                        </div>
+                        <div class="mini-card">
+                            <strong>RAG-Driven Responses</strong>
+                            <span>Uses a knowledge base and reranking pipeline to ground answers in relevant source content.</span>
+                        </div>
+                        <div class="mini-card">
+                            <strong>Always Available</strong>
+                            <span>Reduces wait times and scales support beyond standard office hours.</span>
+                        </div>
+                    </aside>
                 </div>
-                <div class="feature">
-                    <h3>Multilingual & Personalized</h3>
-                    <p>Supports multiple languages and adapts responses to individual student needs and context.</p>
-                </div>
-                <div class="feature">
-                    <h3>Advanced RAG & LLMs</h3>
-                    <p>Combines Retrieval-Augmented Generation with state-of-the-art LLMs for accurate, document-level understanding.</p>
-                </div>
-                <div class="feature">
-                    <h3>Analytics & Feedback</h3>
-                    <p>Tracks queries and feedback for continuous improvement and actionable insights.</p>
-                </div>
+            </section>
+
+            <div class="content">
+                <section id="about">
+                    <h2>Our Mission</h2>
+                    <p>
+                        ASKME is designed to transform university support services by delivering real-time, multilingual,
+                        and context-aware responses. It is especially useful for environments with heavy query volume,
+                        limited staff bandwidth, and a need for consistent answers across departments.
+                    </p>
+                </section>
+
+                <section id="features">
+                    <h2>Why ASKME?</h2>
+                    <div class="grid two">
+                        <div class="info-card">
+                            <h3>24/7 Academic Support</h3>
+                            <p>Always-available answers to student and staff questions, reducing wait time and repetitive workload.</p>
+                        </div>
+                        <div class="info-card">
+                            <h3>Multilingual and Personalized</h3>
+                            <p>Supports multiple languages and adapts responses to the user context when relevant information is available.</p>
+                        </div>
+                        <div class="info-card">
+                            <h3>Advanced RAG and LLMs</h3>
+                            <p>Combines retrieval, reranking, and generative AI to produce more grounded and useful responses.</p>
+                        </div>
+                        <div class="info-card">
+                            <h3>Analytics and Feedback</h3>
+                            <p>Supports logging, evaluation, and continuous improvement across the question-answering workflow.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section>
+                    <h2>Who Is ASKME For?</h2>
+                    <div class="grid three">
+                        <div class="info-card">
+                            <h3>Students</h3>
+                            <p>Instant answers to academic, administrative, and campus-life questions.</p>
+                        </div>
+                        <div class="info-card">
+                            <h3>Staff</h3>
+                            <p>Automation for repetitive requests so teams can spend more time on higher-value support.</p>
+                        </div>
+                        <div class="info-card">
+                            <h3>Administrators</h3>
+                            <p>More consistent support delivery, scalable access, and better visibility into recurring issues.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="technology">
+                    <h2>Technology and Research</h2>
+                    <ul class="tech-list">
+                        <li>Powered by GPT-4o, LLaMA 3.3, and modern NLP tooling</li>
+                        <li>Retrieval-Augmented Generation with ChromaDB and reranking</li>
+                        <li>Built for adaptation across academic institutions and support workflows</li>
+                        <li>Designed with privacy, maintainability, and scalability in mind</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Get Started</h2>
+                    <p>
+                        Open the chat interface to ask questions about university services, student life, documents,
+                        or academic support topics.
+                    </p>
+                    <div class="hero-actions">
+                        <a class="btn btn-primary" href="chat.html">Launch ASKME Chat</a>
+                    </div>
+                </section>
             </div>
-        </section>
-        <section>
-            <h2>Who is ASKME for?</h2>
-            <div class="features">
-                <div class="feature">
-                    <h3>Students</h3>
-                    <p>Instant answers to academic, administrative, and campus life questions—anytime, anywhere.</p>
-                </div>
-                <div class="feature">
-                    <h3>Staff</h3>
-                    <p>Automates repetitive queries, freeing up time for more complex student support tasks.</p>
-                </div>
-                <div class="feature">
-                    <h3>Administrators</h3>
-                    <p>Provides analytics, feedback, and scalable support for university operations.</p>
-                </div>
-            </div>
-        </section>
-        <section>
-            <h2>Technology & Research</h2>
-            <ul>
-                <li>Powered by GPT-4o, LLaMA 3.3, and advanced NLP frameworks</li>
-                <li>Retrieval-Augmented Generation (RAG) with ChromaDB</li>
-                <li>Customizable for any academic institution</li>
-                <li>Secure, privacy-focused, and scalable</li>
-            </ul>
-        </section>
-        <section id="get-started">
-            <h2>Get Started</h2>
-            <p>Click the <b>Get Started</b> button above to open the ASKME chat interface and try it out!</p>
-        </section>
-    </main>
-    <footer>
-        <div>© 2026 ASKME Project. Inspired by UNT. All rights reserved.</div>
-        <div class="footer-links">
-            <a href="#">Contact</a>
-            <a href="#">GitHub</a>
-            <a href="#">Documentation</a>
-        </div>
-    </footer>
+        </main>
+
+        <footer class="footer">
+            <p>&copy; 2026 ASKME Project. All rights reserved.</p>
+        </footer>
+    </div>
 </body>
 </html>
