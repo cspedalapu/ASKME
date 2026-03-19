@@ -100,6 +100,13 @@
     </style>
 </head>
 <body>
+    <button id="sidebar-toggle" aria-label="Toggle sidebar" style="position:fixed; top:16px; left:16px; z-index:100; background:transparent; border:none; outline:none; cursor:pointer; width:36px; height:36px; display:flex; align-items:center; justify-content:center;">
+        <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect y="5" width="28" height="3.5" rx="1.5" fill="#ccc"/>
+            <rect y="12" width="28" height="3.5" rx="1.5" fill="#ccc"/>
+            <rect y="19" width="28" height="3.5" rx="1.5" fill="#ccc"/>
+        </svg>
+    </button>
     <div class="top-bar"></div>
     <style>
         body {
@@ -300,6 +307,23 @@
     <div id="container" style="display:flex; height:100vh; background:#181818;">
         <nav class="sidebar" id="sidebar" style="position:relative;">
             <div class="logo" style="text-align:center;">ASKME</div>
+                    /* Sidebar toggle hidden by default on desktop, visible on mobile or always for demo */
+                    #sidebar-toggle {
+                        background: #232323;
+                        border-radius: 6px;
+                        border: 1.5px solid #444;
+                        box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+                        transition: background 0.2s;
+                    }
+                    #sidebar-toggle:hover {
+                        background: #333;
+                    }
+                    .sidebar {
+                        transition: transform 0.25s cubic-bezier(.4,2,.6,1), width 0.2s;
+                    }
+                    .sidebar.closed {
+                        transform: translateX(-110%);
+                    }
             <ul>
                 <li><a href="https://sso.unt.edu/idp/profile/SAML2/Redirect/SSO?execution=e2s1" target="_blank" style="color:#fff; text-decoration:none;">Canvas</a></li>
                 <li><a href="https://www.unt.edu/student-life.html" target="_blank" style="color:#fff; text-decoration:none;">Student Life</a></li>
@@ -330,10 +354,14 @@
         </div>
     </div>
     <script>
-    // Sidebar resizing logic (resizer inside sidebar, no gap)
+        // Sidebar toggle logic
+        const sidebarToggle = document.getElementById('sidebar-toggle');
+        sidebarToggle.addEventListener('click', function() {
+            sidebar.classList.toggle('closed');
+        });
+    // Sidebar resizing logic (resizer inside sidebar, only sidebar width changes)
     const sidebar = document.getElementById('sidebar');
     const resizer = document.getElementById('sidebar-resizer');
-    const mainArea = document.querySelector('.main-area');
     let isResizing = false;
     let startX = 0;
     let startWidth = 0;
@@ -352,7 +380,6 @@
         if (newWidth < minWidth) newWidth = minWidth;
         if (newWidth > maxWidth) newWidth = maxWidth;
         sidebar.style.width = newWidth + 'px';
-        mainArea.style.marginLeft = newWidth + 'px';
     });
     document.addEventListener('mouseup', function(e) {
         if (isResizing) {
