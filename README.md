@@ -118,3 +118,14 @@ ASKME addresses these issues by providing an AI-driven, always-available support
 - `analysis/`: Jupyter notebooks and scripts for analysis, visualization, and evaluation
 - `data/`: Raw and processed datasets (sensitive, not tracked by git)
 - `output/`: Generated results, model outputs, and pipeline artifacts (not tracked by git)
+
+## Flask Screenshots
+
+### Home Screen 1
+![ASKME Flask home screen 1](screenshots/flask/home_1.png)
+
+### Home Screen 2
+![ASKME Flask home screen 2](screenshots/flask/home_2.png)
+
+### Chat Interface
+![ASKME Flask chat interface](screenshots/flask/askme_interface_1.png)
