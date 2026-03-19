@@ -324,7 +324,7 @@
         </div>
     </div>
     <script>
-        function sendMessage() {
+        async function sendMessage() {
             var input = document.getElementById('chat-input');
             var msg = input.value.trim();
             if (!msg) return;
@@ -338,14 +338,25 @@
             chat.appendChild(userMsg);
             input.value = '';
             chat.scrollTop = chat.scrollHeight;
-            // Bot message (left)
-            setTimeout(function() {
-                var botMsg = document.createElement('div');
-                botMsg.className = 'bot-message';
-                botMsg.innerHTML = '<span>This is a demo. The AI will answer your question here.</span>';
-                chat.appendChild(botMsg);
-                chat.scrollTop = chat.scrollHeight;
-            }, 600);
+            // Bot message (left, loading...)
+            var botMsg = document.createElement('div');
+            botMsg.className = 'bot-message';
+            botMsg.innerHTML = '<span>Thinking...</span>';
+            chat.appendChild(botMsg);
+            chat.scrollTop = chat.scrollHeight;
+            // Call backend
+            try {
+                const response = await fetch('/chat', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ message: msg })
+                });
+                const data = await response.json();
+                botMsg.innerHTML = '<span>' + (data.response || 'No response from AI.') + '</span>';
+            } catch (e) {
+                botMsg.innerHTML = '<span style="color:red;">Error contacting backend.</span>';
+            }
+            chat.scrollTop = chat.scrollHeight;
         }
     </script>
 </body>
