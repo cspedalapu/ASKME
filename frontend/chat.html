@@ -54,16 +54,21 @@
         .sidebar {
             background: #333;
             color: #fff;
-            min-width: 180px;
-            max-width: 400px;
-            width: 270px;
+            min-width: 140px;
+            max-width: 500px;
+            width: 260px;
             padding: 2rem 1rem 2rem 1.5rem;
             display: flex;
             flex-direction: column;
             justify-content: flex-start;
-            resize: horizontal;
             overflow: auto;
             border-right: 3px solid #222;
+            position: fixed;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            height: 100vh;
+            z-index: 10;
         }
         .sidebar .menu-group {
             margin-bottom: 2.5rem;
@@ -293,22 +298,22 @@
         }
     </style>
     <div id="container" style="display:flex; height:100vh; background:#181818;">
-        <nav class="sidebar" id="sidebar">
+        <nav class="sidebar" id="sidebar" style="position:relative;">
             <div class="logo" style="text-align:center;">ASKME</div>
             <ul>
                 <li><a href="https://sso.unt.edu/idp/profile/SAML2/Redirect/SSO?execution=e2s1" target="_blank" style="color:#fff; text-decoration:none;">Canvas</a></li>
                 <li><a href="https://www.unt.edu/student-life.html" target="_blank" style="color:#fff; text-decoration:none;">Student Life</a></li>
                 <li><a href="https://research.unt.edu/" target="_blank" style="color:#fff; text-decoration:none;">Research and innovation</a></li>
 
-                <li><a href="https://library.unt.edu/" target="_blank" style="color:#fff; text-decoration:none;">UNT LIBRARIES</a></li>
-                <li><a href="https://news.unt.edu/index.html" target="_blank" style="color:#fff; text-decoration:none;">UNT CALENDAR</a></li>
-                <li><a href="https://news.unt.edu/index.html" target="_blank" style="color:#fff; text-decoration:none;">UNT NEWS</a></li>
-                <li><a href="https://experience.arcgis.com/experience/5b6f7d38a75b4f6e84c81eae31216267/?draft=true" target="_blank" style="color:#fff; text-decoration:none;">CAMPUS MAP</a></li>
-                <li><a href="https://careers.untsystem.edu/unt/home" target="_blank" style="color:#fff; text-decoration:none;">JOBS AT UNT</a></li>
+                <li><a href="https://library.unt.edu/" target="_blank" style="color:#fff; text-decoration:none;">UNT Libraries</a></li>
+                <li><a href="https://news.unt.edu/index.html" target="_blank" style="color:#fff; text-decoration:none;">UNT Calendar</a></li>
+                <li><a href="https://news.unt.edu/index.html" target="_blank" style="color:#fff; text-decoration:none;">UNT News</a></li>
+                <li><a href="https://experience.arcgis.com/experience/5b6f7d38a75b4f6e84c81eae31216267/?draft=true" target="_blank" style="color:#fff; text-decoration:none;">Campus Map</a></li>
+                <li><a href="https://careers.untsystem.edu/unt/home" target="_blank" style="color:#fff; text-decoration:none;">Jobs at UNT</a></li>
             </ul>
+            <div id="sidebar-resizer" style="width:6px; cursor:ew-resize; background:#232323; height:100vh; position:absolute; top:0; right:0; z-index:11;"></div>
         </nav>
-        <div id="sidebar-resizer" style="width:6px; cursor:ew-resize; background:#232323; height:100vh; position:relative; z-index:11;"></div>
-        <div class="main-area" style="width:100%;">
+        <div class="main-area" style="width:100%; margin-left:260px; transition:margin-left 0.1s;">
             <div class="top-bar">
                 <a href="index.html" class="home-link" style="color:#00853e; font-weight:bold; font-size:1.1rem; text-decoration:none; margin-right:1.5rem;">Home</a>
                 <button class="login-btn">Login</button>
@@ -325,29 +330,35 @@
         </div>
     </div>
     <script>
-    // Sidebar resizing logic
+    // Sidebar resizing logic (resizer inside sidebar, no gap)
     const sidebar = document.getElementById('sidebar');
     const resizer = document.getElementById('sidebar-resizer');
-    const container = document.getElementById('container');
+    const mainArea = document.querySelector('.main-area');
     let isResizing = false;
+    let startX = 0;
+    let startWidth = 0;
     resizer.addEventListener('mousedown', function(e) {
         isResizing = true;
+        startX = e.clientX;
+        startWidth = sidebar.offsetWidth;
         document.body.style.cursor = 'ew-resize';
+        document.body.style.userSelect = 'none';
     });
     document.addEventListener('mousemove', function(e) {
         if (!isResizing) return;
-        // Sidebar is fixed, so use pageX for width
-        let newWidth = e.pageX;
+        let newWidth = startWidth + (e.clientX - startX);
         const minWidth = 140;
         const maxWidth = 500;
         if (newWidth < minWidth) newWidth = minWidth;
         if (newWidth > maxWidth) newWidth = maxWidth;
         sidebar.style.width = newWidth + 'px';
+        mainArea.style.marginLeft = newWidth + 'px';
     });
     document.addEventListener('mouseup', function(e) {
         if (isResizing) {
             isResizing = false;
             document.body.style.cursor = '';
+            document.body.style.userSelect = '';
         }
     });
     </script>
