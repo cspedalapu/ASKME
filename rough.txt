@@ -1,0 +1,4 @@
+http://localhost:5000/chat.html -- run in your browser.
+
+python main.py -- in terminal
+
