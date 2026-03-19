@@ -121,11 +121,17 @@ ASKME addresses these issues by providing an AI-driven, always-available support
 
 ## Flask Screenshots
 
+### Homepage New
+![ASKME Flask homepage new](screenshots/flask/homepage_new.png)
+
+### Homepage New 2
+![ASKME Flask homepage new 2](screenshots/flask/homepage_new2.png)
+
 ### Home Screen 1
 ![ASKME Flask home screen 1](screenshots/flask/home_1.png)
 
 ### Home Screen 2
 ![ASKME Flask home screen 2](screenshots/flask/home_2.png)
 
-### Chat Interface
-![ASKME Flask chat interface](screenshots/flask/askme_interface_1.png)
+### Askme Interface 1
+![ASKME Flask interface 1](screenshots/flask/askme_interface_1.png)
