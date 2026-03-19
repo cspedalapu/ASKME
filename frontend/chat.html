@@ -292,8 +292,8 @@
             .top-bar { left: 60px; padding: 0 0.5rem; }
         }
     </style>
-    <div style="display:flex; height:100vh; background:#181818;">
-        <nav class="sidebar">
+    <div id="container" style="display:flex; height:100vh; background:#181818;">
+        <nav class="sidebar" id="sidebar">
             <div class="logo" style="text-align:center;">ASKME</div>
             <ul>
                 <li><a href="https://sso.unt.edu/idp/profile/SAML2/Redirect/SSO?execution=e2s1" target="_blank" style="color:#fff; text-decoration:none;">Canvas</a></li>
@@ -307,6 +307,7 @@
                 <li><a href="https://careers.untsystem.edu/unt/home" target="_blank" style="color:#fff; text-decoration:none;">JOBS AT UNT</a></li>
             </ul>
         </nav>
+        <div id="sidebar-resizer" style="width:6px; cursor:ew-resize; background:#232323; height:100vh; position:relative; z-index:11;"></div>
         <div class="main-area" style="width:100%;">
             <div class="top-bar">
                 <a href="index.html" class="home-link" style="color:#00853e; font-weight:bold; font-size:1.1rem; text-decoration:none; margin-right:1.5rem;">Home</a>
@@ -323,6 +324,33 @@
             </form>
         </div>
     </div>
+    <script>
+    // Sidebar resizing logic
+    const sidebar = document.getElementById('sidebar');
+    const resizer = document.getElementById('sidebar-resizer');
+    const container = document.getElementById('container');
+    let isResizing = false;
+    resizer.addEventListener('mousedown', function(e) {
+        isResizing = true;
+        document.body.style.cursor = 'ew-resize';
+    });
+    document.addEventListener('mousemove', function(e) {
+        if (!isResizing) return;
+        // Sidebar is fixed, so use pageX for width
+        let newWidth = e.pageX;
+        const minWidth = 140;
+        const maxWidth = 500;
+        if (newWidth < minWidth) newWidth = minWidth;
+        if (newWidth > maxWidth) newWidth = maxWidth;
+        sidebar.style.width = newWidth + 'px';
+    });
+    document.addEventListener('mouseup', function(e) {
+        if (isResizing) {
+            isResizing = false;
+            document.body.style.cursor = '';
+        }
+    });
+    </script>
     <script>
         async function sendMessage() {
             var input = document.getElementById('chat-input');
