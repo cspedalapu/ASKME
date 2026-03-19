@@ -169,34 +169,38 @@
         }
 
         .sidebar-nav li + li {
-            margin-top: 0.55rem;
+            margin-top: 0.15rem;
         }
 
         .sidebar-nav a {
-            display: block;
-            padding: 0.85rem 0.95rem;
-            border-radius: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.55rem 0.35rem;
+            border-radius: 0.7rem;
             text-decoration: none;
             color: #ededed;
-            background: rgba(255, 255, 255, 0.02);
+            background: transparent;
             border: 1px solid transparent;
-            transition: background 0.18s ease, border-color 0.18s ease, transform 0.18s ease;
+            transition: color 0.18s ease, background 0.18s ease, transform 0.18s ease;
         }
 
         .sidebar-nav a:hover {
-            background: rgba(0, 133, 62, 0.12);
-            border-color: rgba(29, 164, 91, 0.28);
+            color: #ffffff;
+            background: rgba(255, 255, 255, 0.03);
             transform: translateX(2px);
         }
 
-        .sidebar-meta {
-            margin-top: 1rem;
-            padding: 0.9rem 1rem;
-            border-radius: 1rem;
-            background: rgba(255, 255, 255, 0.03);
-            color: var(--muted);
-            font-size: 0.9rem;
-            line-height: 1.5;
+        .sidebar-link-icon {
+            width: 1rem;
+            height: 1rem;
+            color: #f0f0f0;
+            flex: 0 0 auto;
+            opacity: 0.92;
+        }
+
+        .sidebar-link-label {
+            line-height: 1.35;
         }
 
         .sidebar-resizer {
@@ -384,21 +388,22 @@
         .composer {
             display: flex;
             align-items: center;
-            gap: 0.75rem;
-            background: rgba(35, 35, 35, 0.96);
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            border-radius: 1.6rem;
-            padding: 0.55rem 0.65rem 0.55rem 1rem;
-            box-shadow: 0 18px 30px rgba(0, 0, 0, 0.18);
+            gap: 0.65rem;
+            background: #222222;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 1.1rem;
+            padding: 0.45rem 0.5rem 0.45rem 0.75rem;
+            box-shadow: none;
         }
 
         .composer input {
             flex: 1;
-            border: none;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 0.2rem;
             outline: none;
             background: transparent;
             color: var(--text);
-            padding: 0.7rem 0;
+            padding: 0.75rem 0.85rem;
         }
 
         .composer input::placeholder {
@@ -408,18 +413,17 @@
         .composer button {
             border: none;
             border-radius: 999px;
-            background: linear-gradient(135deg, #ff8a00, var(--cta));
+            background: #ff7a0a;
             color: #ffffff;
             font-weight: 700;
-            padding: 0.8rem 1.1rem;
+            padding: 0.78rem 1.2rem;
             cursor: pointer;
-            min-width: 84px;
-            transition: transform 0.18s ease, filter 0.18s ease;
+            min-width: 86px;
+            transition: background 0.18s ease;
         }
 
         .composer button:hover:not(:disabled) {
-            transform: translateY(-1px);
-            filter: brightness(1.03);
+            background: #ff8b2c;
         }
 
         .composer button:disabled,
@@ -509,32 +513,22 @@
         <div class="sidebar-header">
             <div class="logo-block">
                 <div class="logo">ASKME</div>
-                <div class="logo-subtitle">Knowledge Management & Engagement</div>
             </div>
-            <button class="icon-btn" id="sidebarClose" type="button" aria-label="Close sidebar">
-                <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true">
-                    <path d="M15 6 9 12l6 6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
-                </svg>
-            </button>
         </div>
 
         <div class="sidebar-section-title">Quick Links</div>
         <nav class="sidebar-nav">
             <ul>
-                <li><a href="https://sso.unt.edu/idp/profile/SAML2/Redirect/SSO?execution=e2s1" target="_blank" rel="noreferrer">Canvas</a></li>
-                <li><a href="https://www.unt.edu/student-life.html" target="_blank" rel="noreferrer">Student Life</a></li>
-                <li><a href="https://research.unt.edu/" target="_blank" rel="noreferrer">Research and Innovation</a></li>
-                <li><a href="https://library.unt.edu/" target="_blank" rel="noreferrer">UNT Libraries</a></li>
-                <li><a href="https://news.unt.edu/index.html" target="_blank" rel="noreferrer">UNT Calendar</a></li>
-                <li><a href="https://news.unt.edu/index.html" target="_blank" rel="noreferrer">UNT News</a></li>
-                <li><a href="https://experience.arcgis.com/experience/5b6f7d38a75b4f6e84c81eae31216267/?draft=true" target="_blank" rel="noreferrer">Campus Map</a></li>
-                <li><a href="https://careers.untsystem.edu/unt/home" target="_blank" rel="noreferrer">Jobs at UNT</a></li>
+                <li><a href="https://sso.unt.edu/idp/profile/SAML2/Redirect/SSO?execution=e2s1" target="_blank" rel="noreferrer"><svg class="sidebar-link-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7.5A2.5 2.5 0 0 1 6.5 5h11A2.5 2.5 0 0 1 20 7.5v9a2.5 2.5 0 0 1-2.5 2.5h-11A2.5 2.5 0 0 1 4 16.5z" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M4.8 8 12 13l7.2-5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="sidebar-link-label">Canvas</span></a></li>
+                <li><a href="https://www.unt.edu/student-life.html" target="_blank" rel="noreferrer"><svg class="sidebar-link-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5Z" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M6.5 20a5.5 5.5 0 0 1 11 0" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg><span class="sidebar-link-label">Student Life</span></a></li>
+                <li><a href="https://research.unt.edu/" target="_blank" rel="noreferrer"><svg class="sidebar-link-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m8 16 8-8" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M9 6h9v9" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 18h4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg><span class="sidebar-link-label">Research and Innovation</span></a></li>
+                <li><a href="https://library.unt.edu/" target="_blank" rel="noreferrer"><svg class="sidebar-link-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 6.5A2.5 2.5 0 0 1 7.5 4H19v15H7.5A2.5 2.5 0 0 0 5 21z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M5 6.5v12" fill="none" stroke="currentColor" stroke-width="1.8"/></svg><span class="sidebar-link-label">UNT Libraries</span></a></li>
+                <li><a href="https://news.unt.edu/index.html" target="_blank" rel="noreferrer"><svg class="sidebar-link-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4v3M17 4v3M5 9h14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><rect x="5" y="6" width="14" height="13" rx="2.5" fill="none" stroke="currentColor" stroke-width="1.8"/></svg><span class="sidebar-link-label">UNT Calendar</span></a></li>
+                <li><a href="https://news.unt.edu/index.html" target="_blank" rel="noreferrer"><svg class="sidebar-link-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 7.5A2.5 2.5 0 0 1 8.5 5h7A2.5 2.5 0 0 1 18 7.5v5A2.5 2.5 0 0 1 15.5 15H12l-4 4v-4H8.5A2.5 2.5 0 0 1 6 12.5z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg><span class="sidebar-link-label">UNT News</span></a></li>
+                <li><a href="https://experience.arcgis.com/experience/5b6f7d38a75b4f6e84c81eae31216267/?draft=true" target="_blank" rel="noreferrer"><svg class="sidebar-link-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20s6-4.35 6-9a6 6 0 1 0-12 0c0 4.65 6 9 6 9Z" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="11" r="2.2" fill="none" stroke="currentColor" stroke-width="1.8"/></svg><span class="sidebar-link-label">Campus Map</span></a></li>
+                <li><a href="https://careers.untsystem.edu/unt/home" target="_blank" rel="noreferrer"><svg class="sidebar-link-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8.5A2.5 2.5 0 0 1 6.5 6h11A2.5 2.5 0 0 1 20 8.5v8a2.5 2.5 0 0 1-2.5 2.5h-11A2.5 2.5 0 0 1 4 16.5z" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M9 6V5.5A1.5 1.5 0 0 1 10.5 4h3A1.5 1.5 0 0 1 15 5.5V6" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M4 11.5h16" fill="none" stroke="currentColor" stroke-width="1.8"/></svg><span class="sidebar-link-label">Jobs at UNT</span></a></li>
             </ul>
         </nav>
-
-        <div class="sidebar-meta">
-            Ask about courses, admissions, student services, or campus resources and the assistant will use the ASKME knowledge base to respond.
-        </div>
 
         <div class="sidebar-resizer" id="sidebarResizer" aria-hidden="true"></div>
     </aside>
@@ -584,7 +578,6 @@
             const sidebar = document.getElementById("sidebar");
             const sidebarBackdrop = document.getElementById("sidebarBackdrop");
             const sidebarToggle = document.getElementById("sidebarToggle");
-            const sidebarClose = document.getElementById("sidebarClose");
             const sidebarResizer = document.getElementById("sidebarResizer");
             const chatForm = document.getElementById("chatForm");
             const chatInput = document.getElementById("chatInput");
@@ -713,7 +706,6 @@
             }
 
             sidebarToggle.addEventListener("click", toggleSidebar);
-            sidebarClose.addEventListener("click", closeSidebar);
             sidebarBackdrop.addEventListener("click", closeSidebar);
 
             mobileQuery.addEventListener("change", syncViewportState);
