@@ -5,425 +5,761 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ASKME Chat</title>
     <style>
+        :root {
+            --bg: #121212;
+            --panel: #1d1d1d;
+            --panel-strong: #232323;
+            --panel-soft: #2b2b2b;
+            --text: #f5f5f5;
+            --muted: #cfcfcf;
+            --border: #323232;
+            --accent: #00853e;
+            --accent-soft: #1da45b;
+            --cta: #ff6a00;
+            --danger: #f87171;
+            --sidebar-width: 260px;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html,
         body {
             margin: 0;
-            font-family: 'Segoe UI', 'SegoeUI', 'system-ui', Arial, sans-serif;
-            background: #f7f7f7;
-            color: #222;
+            min-height: 100%;
+            font-family: "Segoe UI", "SegoeUI", system-ui, Arial, sans-serif;
+            background:
+                radial-gradient(circle at top right, rgba(0, 133, 62, 0.18), transparent 28%),
+                linear-gradient(180deg, #181818 0%, #121212 100%);
+            color: var(--text);
         }
-        .top-bar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: #00853e;
-            color: #fff;
-            padding: 1rem 2rem;
+
+        body {
+            overflow: hidden;
         }
-        .top-bar .home-btn {
-            background: #fff;
-            color: #00853e;
-            border: 2px solid #00853e;
-            border-radius: 4px;
-            padding: 0.5rem 1.2rem;
-            font-weight: bold;
-            text-decoration: none;
-            transition: background 0.2s, color 0.2s;
+
+        a {
+            color: inherit;
         }
-        .top-bar .home-btn:hover {
-            background: #00853e;
-            color: #fff;
+
+        button,
+        input {
+            font: inherit;
         }
-        .top-bar .login-btn {
-            background: #fff;
-            color: #00853e;
-            border: 2px solid #00853e;
-            border-radius: 4px;
-            padding: 0.5rem 1.2rem;
-            font-weight: bold;
-            text-decoration: none;
-            transition: background 0.2s, color 0.2s;
+
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
         }
-        .top-bar .login-btn:hover {
-            background: #00853e;
-            color: #fff;
+
+        .sidebar-backdrop {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.42);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s ease;
+            z-index: 150;
         }
-        .container {
-            display: flex;
-            min-height: 90vh;
-        }
+
         .sidebar {
-            background: #333;
-            color: #fff;
-            min-width: 140px;
-            max-width: 500px;
-            width: 260px;
-            padding: 2rem 1rem 2rem 1.5rem;
+            position: fixed;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            width: var(--sidebar-width);
+            max-width: min(88vw, 360px);
+            background:
+                linear-gradient(180deg, rgba(32, 32, 32, 0.98), rgba(18, 18, 18, 0.98));
+            border-right: 1px solid var(--border);
+            box-shadow: 10px 0 30px rgba(0, 0, 0, 0.28);
             display: flex;
             flex-direction: column;
-            justify-content: flex-start;
-            overflow: auto;
-            border-right: 3px solid #222;
-            position: fixed;
-            left: 0;
-            top: 0;
-            bottom: 0;
-            height: 100vh;
-            z-index: 10;
+            padding: 1.5rem 1rem 1.25rem 1.25rem;
+            z-index: 200;
+            transition: transform 0.22s ease, width 0.12s ease;
         }
-        .sidebar .menu-group {
-            margin-bottom: 2.5rem;
+
+        body.sidebar-collapsed .sidebar {
+            transform: translateX(calc(-1 * var(--sidebar-width) - 20px));
         }
-        .sidebar ul {
+
+        .sidebar-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .logo-block {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+
+        .logo {
+            font-size: 1.35rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+        }
+
+        .logo-subtitle {
+            color: var(--muted);
+            font-size: 0.8rem;
+            line-height: 1.4;
+        }
+
+        .icon-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 2.5rem;
+            height: 2.5rem;
+            border: 1px solid #3a3a3a;
+            border-radius: 0.85rem;
+            background: rgba(255, 255, 255, 0.04);
+            color: var(--text);
+            cursor: pointer;
+            transition: background 0.18s ease, border-color 0.18s ease, transform 0.18s ease;
+        }
+
+        .icon-btn:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: #4a4a4a;
+            transform: translateY(-1px);
+        }
+
+        .icon-btn:focus-visible,
+        .login-btn:focus-visible,
+        .composer button:focus-visible,
+        .composer input:focus-visible,
+        .sidebar a:focus-visible {
+            outline: 2px solid var(--accent-soft);
+            outline-offset: 2px;
+        }
+
+        .sidebar-section-title {
+            color: #9d9d9d;
+            font-size: 0.76rem;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            margin: 0 0 0.8rem;
+        }
+
+        .sidebar-nav {
+            flex: 1;
+            overflow-y: auto;
+            padding-right: 0.35rem;
+        }
+
+        .sidebar-nav ul {
             list-style: none;
             padding: 0;
             margin: 0;
         }
-        .sidebar li {
-            font-weight: bold;
-            margin-bottom: 1.1rem;
-            font-size: 1.1rem;
-            letter-spacing: 0.5px;
+
+        .sidebar-nav li + li {
+            margin-top: 0.55rem;
         }
-        .main-content {
-            flex: 1;
-            padding: 2.5rem 2rem;
+
+        .sidebar-nav a {
+            display: block;
+            padding: 0.85rem 0.95rem;
+            border-radius: 0.95rem;
+            text-decoration: none;
+            color: #ededed;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid transparent;
+            transition: background 0.18s ease, border-color 0.18s ease, transform 0.18s ease;
+        }
+
+        .sidebar-nav a:hover {
+            background: rgba(0, 133, 62, 0.12);
+            border-color: rgba(29, 164, 91, 0.28);
+            transform: translateX(2px);
+        }
+
+        .sidebar-meta {
+            margin-top: 1rem;
+            padding: 0.9rem 1rem;
+            border-radius: 1rem;
+            background: rgba(255, 255, 255, 0.03);
+            color: var(--muted);
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .sidebar-resizer {
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            width: 8px;
+            cursor: ew-resize;
+        }
+
+        .main-area {
+            margin-left: var(--sidebar-width);
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
+            transition: margin-left 0.22s ease;
+        }
+
+        body.sidebar-collapsed .main-area {
+            margin-left: 0;
+        }
+
+        .top-bar {
+            position: sticky;
+            top: 0;
+            z-index: 120;
+            display: flex;
             align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            padding: 1rem 1.5rem;
+            backdrop-filter: blur(14px);
+            background: rgba(18, 18, 18, 0.72);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .top-bar-left,
+        .top-bar-right {
+            display: flex;
+            align-items: center;
+            gap: 0.85rem;
+        }
+
+        .home-link {
+            color: #e8f7ee;
+            text-decoration: none;
+            font-weight: 700;
+            letter-spacing: 0.02em;
+        }
+
+        .home-link:hover {
+            color: #ffffff;
+        }
+
+        .login-btn {
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 999px;
+            background: #ffffff;
+            color: var(--accent);
+            padding: 0.62rem 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform 0.18s ease, box-shadow 0.18s ease;
+        }
+
+        .login-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 8px 18px rgba(255, 255, 255, 0.12);
+        }
+
+        .chat-shell {
+            flex: 1;
+            width: 100%;
+            max-width: 980px;
+            margin: 0 auto;
+            padding: 2rem 1rem 1.5rem;
+            display: flex;
+            flex-direction: column;
+            min-height: 0;
+        }
+
+        .chat-intro {
+            text-align: center;
+            margin: 4.5rem auto 2rem;
+            max-width: 760px;
+            transition: opacity 0.2s ease, transform 0.2s ease;
+        }
+
+        .chat-intro.hidden {
+            display: none;
+        }
+
+        .chat-intro h1 {
+            margin: 0 0 0.75rem;
+            font-size: clamp(2.2rem, 4vw, 3.3rem);
+            font-weight: 750;
+            letter-spacing: 0.04em;
+        }
+
+        .chat-intro p {
+            margin: 0 auto;
+            color: var(--muted);
+            font-size: 1.05rem;
+            line-height: 1.7;
+        }
+
+        .chat-intro .intro-helper {
+            margin-top: 1rem;
+            font-size: 0.96rem;
+            color: #a9a9a9;
+        }
+
+        .chat-scroll {
+            flex: 1;
+            min-height: 0;
+            overflow-y: auto;
+            padding: 0.5rem 0.1rem 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.9rem;
+            scroll-behavior: smooth;
+        }
+
+        .chat-scroll::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        .chat-scroll::-webkit-scrollbar-thumb {
+            background: #414141;
+            border-radius: 999px;
+        }
+
+        .message {
+            display: flex;
+            width: 100%;
+        }
+
+        .message.user {
+            justify-content: flex-end;
+        }
+
+        .message.bot {
             justify-content: flex-start;
         }
+
+        .bubble {
+            max-width: min(78%, 700px);
+            padding: 0.95rem 1.1rem;
+            border-radius: 1.35rem;
+            line-height: 1.6;
+            white-space: pre-wrap;
+            word-break: break-word;
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.18);
+        }
+
+        .message.user .bubble {
+            background: linear-gradient(135deg, #1d5e3b, #00853e);
+            color: #ffffff;
+            border-bottom-right-radius: 0.45rem;
+        }
+
+        .message.bot .bubble {
+            background: var(--panel-strong);
+            color: var(--text);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-bottom-left-radius: 0.45rem;
+        }
+
+        .bubble.pending {
+            color: #d0d0d0;
+        }
+
+        .bubble.error {
+            color: #ffe4e4;
+            background: rgba(184, 44, 44, 0.25);
+            border-color: rgba(248, 113, 113, 0.28);
+        }
+
+        .chat-form {
+            padding-top: 0.75rem;
+            background: linear-gradient(180deg, rgba(18, 18, 18, 0), rgba(18, 18, 18, 0.9) 30%, rgba(18, 18, 18, 1) 100%);
+        }
+
+        .composer {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            background: rgba(35, 35, 35, 0.96);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 1.6rem;
+            padding: 0.55rem 0.65rem 0.55rem 1rem;
+            box-shadow: 0 18px 30px rgba(0, 0, 0, 0.18);
+        }
+
+        .composer input {
+            flex: 1;
+            border: none;
+            outline: none;
+            background: transparent;
+            color: var(--text);
+            padding: 0.7rem 0;
+        }
+
+        .composer input::placeholder {
+            color: #9f9f9f;
+        }
+
+        .composer button {
+            border: none;
+            border-radius: 999px;
+            background: linear-gradient(135deg, #ff8a00, var(--cta));
+            color: #ffffff;
+            font-weight: 700;
+            padding: 0.8rem 1.1rem;
+            cursor: pointer;
+            min-width: 84px;
+            transition: transform 0.18s ease, filter 0.18s ease;
+        }
+
+        .composer button:hover:not(:disabled) {
+            transform: translateY(-1px);
+            filter: brightness(1.03);
+        }
+
+        .composer button:disabled,
+        .composer input:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+
+        .chat-note {
+            margin: 0.65rem 0 0;
+            color: #9f9f9f;
+            font-size: 0.88rem;
+            text-align: center;
+        }
+
         @media (max-width: 900px) {
-            .container { flex-direction: column; }
-            .sidebar { width: 100%; flex-direction: row; flex-wrap: wrap; padding: 1rem; }
-            .main-content { padding: 1rem; }
+            body {
+                overflow-y: auto;
+            }
+
+            .sidebar {
+                width: min(82vw, 320px);
+                transform: translateX(-105%);
+            }
+
+            body.sidebar-collapsed .sidebar {
+                transform: translateX(-105%);
+            }
+
+            body.mobile-sidebar-open .sidebar {
+                transform: translateX(0);
+            }
+
+            body.mobile-sidebar-open .sidebar-backdrop {
+                opacity: 1;
+                pointer-events: auto;
+            }
+
+            .sidebar-resizer {
+                display: none;
+            }
+
+            .main-area,
+            body.sidebar-collapsed .main-area {
+                margin-left: 0;
+            }
+
+            .top-bar {
+                padding: 0.9rem 1rem;
+            }
+
+            .chat-shell {
+                width: 100%;
+                padding: 1.25rem 0.75rem 1rem;
+            }
+
+            .chat-intro {
+                margin-top: 2.5rem;
+                margin-bottom: 1.5rem;
+            }
+
+            .bubble {
+                max-width: 88%;
+            }
+        }
+
+        @media (max-width: 560px) {
+            .top-bar-right .login-btn {
+                display: none;
+            }
+
+            .composer {
+                padding-left: 0.85rem;
+            }
+
+            .composer button {
+                min-width: 72px;
+                padding-inline: 0.95rem;
+            }
         }
     </style>
 </head>
 <body>
-    <button id="sidebar-toggle" aria-label="Toggle sidebar" style="position:fixed; top:16px; left:16px; z-index:100; background:transparent; border:none; outline:none; cursor:pointer; width:36px; height:36px; display:flex; align-items:center; justify-content:center;">
-        <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect y="5" width="28" height="3.5" rx="1.5" fill="#ccc"/>
-            <rect y="12" width="28" height="3.5" rx="1.5" fill="#ccc"/>
-            <rect y="19" width="28" height="3.5" rx="1.5" fill="#ccc"/>
-        </svg>
-    </button>
-    <div class="top-bar"></div>
-    <style>
-        body {
-            margin: 0;
-            font-family: 'Segoe UI', 'SegoeUI', 'system-ui', Arial, sans-serif;
-            background: #181818;
-            color: #fff;
-        }
-        .sidebar {
-            background: #222;
-            color: #fff;
-            width: 260px;
-            min-width: 180px;
-            max-width: 320px;
-            padding: 2rem 1rem 2rem 1.5rem;
-            display: flex;
-            flex-direction: column;
-            border-right: 1.5px solid #232323;
-            height: 100vh;
-            overflow-y: auto;
-            position: fixed;
-            left: 0;
-            top: 0;
-            bottom: 0;
-            z-index: 10;
-        }
-        .sidebar .logo {
-            font-size: 1.3rem;
-            font-weight: 600;
-            margin-bottom: 2.5rem;
-            letter-spacing: 1px;
-        }
-        .sidebar ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-            font-size: 1rem;
-        }
-        .sidebar li {
-            font-weight: normal;
-            margin-bottom: 1rem;
-            letter-spacing: 0.5px;
-            font-size: 1rem;
-        }
-        .top-bar {
-            position: fixed;
-            left: 260px;
-            right: 0;
-            top: 0;
-            height: 56px;
-            background: transparent;
-            display: flex;
-            align-items: center;
-            justify-content: flex-end;
-            z-index: 20;
-            padding: 0 2rem;
-        }
-        .login-btn {
-            background: #fff;
-            color: #00853e;
-            border: none;
-            border-radius: 8px;
-            padding: 0.5rem 1.2rem;
-            font-weight: bold;
-            font-size: 1rem;
-            cursor: pointer;
-            margin-left: 1rem;
-        }
-        .main-area {
-            margin-left: 260px;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: stretch;
-            justify-content: flex-start;
-            height: 100vh;
-        }
-        .center-prompt {
-            margin-top: 120px;
-            margin-bottom: 40px;
-            font-size: 2rem;
-            font-weight: 500;
-            color: #fff;
-            text-align: center;
-        }
-        .chat-scroll {
-            width: 100%;
-            max-width: 900px;
-            flex: 1;
-            overflow-y: auto;
-            margin: 0 auto;
-            padding: 0 0 1.5rem 0;
-            box-sizing: border-box;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-end;
-            gap: 0.2rem;
-        }
+    <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
 
-        .user-message {
-            display: flex;
-            justify-content: flex-end;
-            margin: 0.5rem 0;
-        }
-        .user-message span {
-            background: #232323;
-            color: #fff;
-            border-radius: 1.5rem;
-            padding: 0.6rem 1.1rem;
-            max-width: 70%;
-            display: inline-block;
-            text-align: right;
-            font-size: 0.97rem;
-            font-family: 'Segoe UI', 'SegoeUI', 'system-ui', Arial, sans-serif;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.12);
-        }
-        .bot-message {
-            display: flex;
-            justify-content: flex-start;
-            margin: 0.5rem 0 1.5rem 0;
-        }
-        .bot-message span {
-            background: #232323;
-            color: #fff;
-            border-radius: 1.5rem;
-            padding: 0.6rem 1.1rem;
-            max-width: 70%;
-            display: inline-block;
-            text-align: left;
-            font-size: 0.97rem;
-            font-family: 'Segoe UI', 'SegoeUI', 'system-ui', Arial, sans-serif;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.12);
-        }
-        .chat-scroll::-webkit-scrollbar {
-            width: 12px;
-            background: transparent;
-        }
-        .chat-scroll::-webkit-scrollbar-thumb {
-            background: #444;
-            border-radius: 6px;
-        }
-        .chat-scroll::-webkit-scrollbar-track {
-            background: transparent;
-        }
-        .chat-form {
-            width: 100%;
-            max-width: 900px;
-            margin: 0 auto 2.5rem auto;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            position: sticky;
-            bottom: 0;
-            z-index: 2;
-        }
-        .chat-input-row {
-            display: flex;
-            width: 100%;
-            background: #232323;
-            border-radius: 2rem;
-            align-items: center;
-            padding: 0.5rem 1rem;
-            box-shadow: 0 4px 24px rgba(0,0,0,0.18);
-            margin-bottom: 0.5rem;
-        }
-        .chat-input-row input {
-            flex: 1;
-            background: transparent;
-            border: none;
-            color: #fff;
-            font-size: 1rem;
-            font-family: 'Segoe UI', 'SegoeUI', 'system-ui', Arial, sans-serif;
-            padding: 0.6rem 0.5rem;
-            outline: none;
-        }
-        .chat-input-row button {
-            background: #ff6600;
-            border: none;
-            border-radius: 50%;
-            width: 2.5rem;
-            height: 2.5rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-left: 0.5rem;
-            cursor: pointer;
-        }
-        .chat-input-row span {
-            font-size: 1.3rem;
-            color: #fff;
-        }
-        @media (max-width: 900px) {
-            .sidebar { width: 60px; min-width: 60px; padding: 1rem 0.5rem; }
-            .main-area { margin-left: 60px; }
-            .top-bar { left: 60px; padding: 0 0.5rem; }
-        }
-    </style>
-    <div id="container" style="display:flex; height:100vh; background:#181818;">
-        <nav class="sidebar" id="sidebar" style="position:relative;">
-            <div class="logo" style="text-align:center;">ASKME</div>
-                    /* Sidebar toggle hidden by default on desktop, visible on mobile or always for demo */
-                    #sidebar-toggle {
-                        background: #232323;
-                        border-radius: 6px;
-                        border: 1.5px solid #444;
-                        box-shadow: 0 2px 8px rgba(0,0,0,0.12);
-                        transition: background 0.2s;
-                    }
-                    #sidebar-toggle:hover {
-                        background: #333;
-                    }
-                    .sidebar {
-                        transition: transform 0.25s cubic-bezier(.4,2,.6,1), width 0.2s;
-                    }
-                    .sidebar.closed {
-                        transform: translateX(-110%);
-                    }
-            <ul>
-                <li><a href="https://sso.unt.edu/idp/profile/SAML2/Redirect/SSO?execution=e2s1" target="_blank" style="color:#fff; text-decoration:none;">Canvas</a></li>
-                <li><a href="https://www.unt.edu/student-life.html" target="_blank" style="color:#fff; text-decoration:none;">Student Life</a></li>
-                <li><a href="https://research.unt.edu/" target="_blank" style="color:#fff; text-decoration:none;">Research and innovation</a></li>
-
-                <li><a href="https://library.unt.edu/" target="_blank" style="color:#fff; text-decoration:none;">UNT Libraries</a></li>
-                <li><a href="https://news.unt.edu/index.html" target="_blank" style="color:#fff; text-decoration:none;">UNT Calendar</a></li>
-                <li><a href="https://news.unt.edu/index.html" target="_blank" style="color:#fff; text-decoration:none;">UNT News</a></li>
-                <li><a href="https://experience.arcgis.com/experience/5b6f7d38a75b4f6e84c81eae31216267/?draft=true" target="_blank" style="color:#fff; text-decoration:none;">Campus Map</a></li>
-                <li><a href="https://careers.untsystem.edu/unt/home" target="_blank" style="color:#fff; text-decoration:none;">Jobs at UNT</a></li>
-            </ul>
-            <div id="sidebar-resizer" style="width:6px; cursor:ew-resize; background:#232323; height:100vh; position:absolute; top:0; right:0; z-index:11;"></div>
-        </nav>
-        <div class="main-area" style="width:100%; margin-left:260px; transition:margin-left 0.1s;">
-            <div class="top-bar">
-                <a href="index.html" class="home-link" style="color:#00853e; font-weight:bold; font-size:1.1rem; text-decoration:none; margin-right:1.5rem;">Home</a>
-                <button class="login-btn">Login</button>
+    <aside class="sidebar" id="sidebar" aria-label="University resources">
+        <div class="sidebar-header">
+            <div class="logo-block">
+                <div class="logo">ASKME</div>
+                <div class="logo-subtitle">Knowledge Management & Engagement</div>
             </div>
-            <div class="center-prompt" id="centerPrompt">ASKME</div>
-                        <div style="text-align:center; color:#e0e0e0; font-size:1.15rem; font-weight:400; margin-top:-1.1rem; margin-bottom:2.2rem; letter-spacing:0.2px;">AI Support for Knowledge Management & Engagement</div>
-            <div class="chat-scroll" id="chat-messages"></div>
-            <form id="chat-form" class="chat-form" onsubmit="event.preventDefault(); sendMessage();">
-                <div class="chat-input-row">
-                    <input id="chat-input" type="text" placeholder="Ask anything" autocomplete="off" />
-                    <button type="submit"><span>&#128483;</span></button>
-                </div>
-            </form>
+            <button class="icon-btn" id="sidebarClose" type="button" aria-label="Close sidebar">
+                <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M15 6 9 12l6 6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+                </svg>
+            </button>
         </div>
-    </div>
+
+        <div class="sidebar-section-title">Quick Links</div>
+        <nav class="sidebar-nav">
+            <ul>
+                <li><a href="https://sso.unt.edu/idp/profile/SAML2/Redirect/SSO?execution=e2s1" target="_blank" rel="noreferrer">Canvas</a></li>
+                <li><a href="https://www.unt.edu/student-life.html" target="_blank" rel="noreferrer">Student Life</a></li>
+                <li><a href="https://research.unt.edu/" target="_blank" rel="noreferrer">Research and Innovation</a></li>
+                <li><a href="https://library.unt.edu/" target="_blank" rel="noreferrer">UNT Libraries</a></li>
+                <li><a href="https://news.unt.edu/index.html" target="_blank" rel="noreferrer">UNT Calendar</a></li>
+                <li><a href="https://news.unt.edu/index.html" target="_blank" rel="noreferrer">UNT News</a></li>
+                <li><a href="https://experience.arcgis.com/experience/5b6f7d38a75b4f6e84c81eae31216267/?draft=true" target="_blank" rel="noreferrer">Campus Map</a></li>
+                <li><a href="https://careers.untsystem.edu/unt/home" target="_blank" rel="noreferrer">Jobs at UNT</a></li>
+            </ul>
+        </nav>
+
+        <div class="sidebar-meta">
+            Ask about courses, admissions, student services, or campus resources and the assistant will use the ASKME knowledge base to respond.
+        </div>
+
+        <div class="sidebar-resizer" id="sidebarResizer" aria-hidden="true"></div>
+    </aside>
+
+    <main class="main-area">
+        <header class="top-bar">
+            <div class="top-bar-left">
+                <button class="icon-btn" id="sidebarToggle" type="button" aria-label="Open sidebar">
+                    <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M4 7h16M4 12h16M4 17h16" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="2"/>
+                    </svg>
+                </button>
+                <a href="index.html" class="home-link">Home</a>
+            </div>
+            <div class="top-bar-right">
+                <button class="login-btn" type="button">Login</button>
+            </div>
+        </header>
+
+        <section class="chat-shell">
+            <div class="chat-intro" id="chatIntro">
+                <h1>ASKME</h1>
+                <p>AI Support for Knowledge Management & Engagement</p>
+                <p class="intro-helper">Ask anything about university services, academic support, student life, or campus resources.</p>
+            </div>
+
+            <div class="chat-scroll" id="chatMessages" aria-live="polite" aria-label="Chat conversation"></div>
+
+            <form id="chatForm" class="chat-form">
+                <label class="sr-only" for="chatInput">Type your question</label>
+                <div class="composer">
+                    <input id="chatInput" type="text" placeholder="Ask anything..." autocomplete="off" />
+                    <button id="sendButton" type="submit">Send</button>
+                </div>
+                <p class="chat-note">Responses are generated from the ASKME backend at <code>/chat</code>.</p>
+            </form>
+        </section>
+    </main>
+
     <script>
-        // Sidebar toggle logic
-        const sidebarToggle = document.getElementById('sidebar-toggle');
-        sidebarToggle.addEventListener('click', function() {
-            sidebar.classList.toggle('closed');
-        });
-    // Sidebar resizing logic (resizer inside sidebar, only sidebar width changes)
-    const sidebar = document.getElementById('sidebar');
-    const resizer = document.getElementById('sidebar-resizer');
-    let isResizing = false;
-    let startX = 0;
-    let startWidth = 0;
-    resizer.addEventListener('mousedown', function(e) {
-        isResizing = true;
-        startX = e.clientX;
-        startWidth = sidebar.offsetWidth;
-        document.body.style.cursor = 'ew-resize';
-        document.body.style.userSelect = 'none';
-    });
-    document.addEventListener('mousemove', function(e) {
-        if (!isResizing) return;
-        let newWidth = startWidth + (e.clientX - startX);
-        const minWidth = 140;
-        const maxWidth = 500;
-        if (newWidth < minWidth) newWidth = minWidth;
-        if (newWidth > maxWidth) newWidth = maxWidth;
-        sidebar.style.width = newWidth + 'px';
-    });
-    document.addEventListener('mouseup', function(e) {
-        if (isResizing) {
-            isResizing = false;
-            document.body.style.cursor = '';
-            document.body.style.userSelect = '';
-        }
-    });
-    </script>
-    <script>
-        async function sendMessage() {
-            var input = document.getElementById('chat-input');
-            var msg = input.value.trim();
-            if (!msg) return;
-            var chat = document.getElementById('chat-messages');
-            var prompt = document.getElementById('centerPrompt');
-            if (prompt) prompt.style.display = 'none';
-            // User message (right)
-            var userMsg = document.createElement('div');
-            userMsg.className = 'user-message';
-            userMsg.innerHTML = '<span>' + msg + '</span>';
-            chat.appendChild(userMsg);
-            input.value = '';
-            chat.scrollTop = chat.scrollHeight;
-            // Bot message (left, loading...)
-            var botMsg = document.createElement('div');
-            botMsg.className = 'bot-message';
-            botMsg.innerHTML = '<span>Thinking...</span>';
-            chat.appendChild(botMsg);
-            chat.scrollTop = chat.scrollHeight;
-            // Call backend
-            try {
-                const response = await fetch('/chat', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ message: msg })
-                });
-                const data = await response.json();
-                botMsg.innerHTML = '<span>' + (data.response || 'No response from AI.') + '</span>';
-            } catch (e) {
-                botMsg.innerHTML = '<span style="color:red;">Error contacting backend.</span>';
+        (function () {
+            const body = document.body;
+            const rootStyle = document.documentElement.style;
+            const mobileQuery = window.matchMedia("(max-width: 900px)");
+            const savedWidth = localStorage.getItem("askmeSidebarWidth");
+
+            const sidebar = document.getElementById("sidebar");
+            const sidebarBackdrop = document.getElementById("sidebarBackdrop");
+            const sidebarToggle = document.getElementById("sidebarToggle");
+            const sidebarClose = document.getElementById("sidebarClose");
+            const sidebarResizer = document.getElementById("sidebarResizer");
+            const chatForm = document.getElementById("chatForm");
+            const chatInput = document.getElementById("chatInput");
+            const sendButton = document.getElementById("sendButton");
+            const chatMessages = document.getElementById("chatMessages");
+            const chatIntro = document.getElementById("chatIntro");
+
+            let isSending = false;
+            let isResizing = false;
+            let startX = 0;
+            let startWidth = 260;
+
+            if (savedWidth) {
+                rootStyle.setProperty("--sidebar-width", savedWidth + "px");
             }
-            chat.scrollTop = chat.scrollHeight;
-        }
+
+            function isMobile() {
+                return mobileQuery.matches;
+            }
+
+            function syncViewportState() {
+                if (isMobile()) {
+                    body.classList.remove("sidebar-collapsed");
+                    body.classList.remove("mobile-sidebar-open");
+                }
+            }
+
+            function openSidebar() {
+                if (isMobile()) {
+                    body.classList.add("mobile-sidebar-open");
+                    return;
+                }
+
+                body.classList.remove("sidebar-collapsed");
+            }
+
+            function closeSidebar() {
+                if (isMobile()) {
+                    body.classList.remove("mobile-sidebar-open");
+                    return;
+                }
+
+                body.classList.add("sidebar-collapsed");
+            }
+
+            function toggleSidebar() {
+                if (isMobile()) {
+                    body.classList.toggle("mobile-sidebar-open");
+                    return;
+                }
+
+                body.classList.toggle("sidebar-collapsed");
+            }
+
+            function scrollToBottom() {
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }
+
+            function hideIntro() {
+                chatIntro.classList.add("hidden");
+            }
+
+            function appendMessage(role, text, extraClass) {
+                const message = document.createElement("div");
+                const bubble = document.createElement("div");
+                message.className = "message " + role;
+                bubble.className = "bubble" + (extraClass ? " " + extraClass : "");
+                bubble.textContent = text;
+                message.appendChild(bubble);
+                chatMessages.appendChild(message);
+                scrollToBottom();
+                return bubble;
+            }
+
+            function setSendingState(nextState) {
+                isSending = nextState;
+                chatInput.disabled = nextState;
+                sendButton.disabled = nextState;
+                sendButton.textContent = nextState ? "Sending..." : "Send";
+            }
+
+            async function sendMessage() {
+                const message = chatInput.value.trim();
+                if (!message || isSending) {
+                    return;
+                }
+
+                hideIntro();
+                appendMessage("user", message);
+                chatInput.value = "";
+                setSendingState(true);
+
+                const responseBubble = appendMessage("bot", "Thinking...", "pending");
+
+                try {
+                    const response = await fetch("/chat", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({ message })
+                    });
+
+                    let data;
+                    try {
+                        data = await response.json();
+                    } catch (parseError) {
+                        throw new Error("The server returned an unreadable response.");
+                    }
+
+                    if (!response.ok) {
+                        throw new Error(data.response || "The server could not complete that request.");
+                    }
+
+                    responseBubble.classList.remove("pending");
+                    responseBubble.textContent = data.response || "No response from AI.";
+                } catch (error) {
+                    responseBubble.classList.remove("pending");
+                    responseBubble.classList.add("error");
+                    responseBubble.textContent = error.message || "Error contacting backend.";
+                } finally {
+                    setSendingState(false);
+                    chatInput.focus();
+                    scrollToBottom();
+                }
+            }
+
+            sidebarToggle.addEventListener("click", toggleSidebar);
+            sidebarClose.addEventListener("click", closeSidebar);
+            sidebarBackdrop.addEventListener("click", closeSidebar);
+
+            mobileQuery.addEventListener("change", syncViewportState);
+            window.addEventListener("resize", syncViewportState);
+
+            chatForm.addEventListener("submit", function (event) {
+                event.preventDefault();
+                sendMessage();
+            });
+
+            sidebarResizer.addEventListener("mousedown", function (event) {
+                if (isMobile()) {
+                    return;
+                }
+
+                isResizing = true;
+                startX = event.clientX;
+                startWidth = sidebar.getBoundingClientRect().width;
+                body.style.cursor = "ew-resize";
+                body.style.userSelect = "none";
+            });
+
+            document.addEventListener("mousemove", function (event) {
+                if (!isResizing) {
+                    return;
+                }
+
+                let nextWidth = startWidth + (event.clientX - startX);
+                nextWidth = Math.min(360, Math.max(200, nextWidth));
+                rootStyle.setProperty("--sidebar-width", nextWidth + "px");
+                localStorage.setItem("askmeSidebarWidth", String(nextWidth));
+            });
+
+            document.addEventListener("mouseup", function () {
+                if (!isResizing) {
+                    return;
+                }
+
+                isResizing = false;
+                body.style.cursor = "";
+                body.style.userSelect = "";
+            });
+
+            chatInput.focus();
+            syncViewportState();
+        }());
     </script>
 </body>
 </html>
